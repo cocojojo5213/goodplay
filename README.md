@@ -80,6 +80,64 @@ Run the database migrations:
 php artisan migrate
 ```
 
+### 6. Create the initial admin user
+
+You can create an initial admin user using one of the following methods:
+
+#### Using the Artisan command (interactive):
+
+```bash
+php artisan admin:create
+```
+
+This will prompt you for the admin's email, password, and name.
+
+#### Using the Artisan command (with options):
+
+```bash
+php artisan admin:create --email=admin@example.com --password=your-password --name="Admin User"
+```
+
+#### Using the database seeder:
+
+```bash
+php artisan db:seed --class=AdminUserSeeder
+```
+
+This will create an admin user with the credentials:
+- **Email**: admin@example.com
+- **Password**: password
+- **Name**: Admin User
+
+## Authentication & Authorization
+
+This application implements role-based access control (RBAC) with admin-only protected routes.
+
+### Features
+
+- **Email/Password Authentication**: Only email and password login is enabled (registration is disabled)
+- **Role-Based Access Control**: Users must have the `admin` role to access protected routes
+- **Admin Dashboard**: Protected by both authentication and admin role verification
+- **Sanctum Integration**: Configured for SPA authentication
+
+### Admin Role
+
+The system uses a single `admin` role by default. All protected routes require users to have this role.
+
+### Usage
+
+```php
+// Check if a user is an admin
+if (auth()->user()->isAdmin()) {
+    // User is admin
+}
+
+// Check if a user has a specific role
+if (auth()->user()->hasRole('admin')) {
+    // User has admin role
+}
+```
+
 ## Development
 
 ### Running the development servers
@@ -128,14 +186,16 @@ php artisan test --coverage
 
 ## Available Features
 
-Laravel Breeze provides the following authentication features out of the box:
+This application provides the following authentication and authorization features:
 
-- User registration
-- Login/logout
-- Password reset
-- Email verification
-- Profile management
-- Password confirmation
+- **Admin-only authentication**: Email/password login (registration disabled)
+- **Role-Based Access Control (RBAC)**: Admin role enforcement on protected routes
+- **Login/logout**: Admin session management
+- **Password reset**: Secure password recovery
+- **Email verification**: Verified email requirement
+- **Profile management**: Admin profile settings
+- **Password confirmation**: Sensitive action protection
+- **Laravel Sanctum**: SPA authentication support
 
 ## Project Structure
 
@@ -168,6 +228,7 @@ Laravel Breeze provides the following authentication features out of the box:
 | `npm run dev` | Start Vite development server with HMR |
 | `npm run build` | Build assets for production |
 | `php artisan migrate` | Run database migrations |
+| `php artisan admin:create` | Create an initial admin user |
 | `php artisan test` | Run automated tests |
 | `php artisan tinker` | Open Laravel REPL |
 | `php artisan route:list` | List all registered routes |

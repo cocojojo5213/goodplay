@@ -19,12 +19,13 @@ const showingNavigationDropdown = ref(false);
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
+                            <div class="shrink-0 flex items-center gap-2">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
                                     />
                                 </Link>
+                                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Admin Panel</span>
                             </div>
 
                             <!-- Navigation Links -->
