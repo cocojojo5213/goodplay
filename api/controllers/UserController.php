@@ -5,7 +5,9 @@
  * 处理用户的增删改查操作
  */
 
-class UserController {
+require_once __DIR__ . '/BaseController.php';
+
+class UserController extends BaseController {
     
     /**
      * 获取用户列表

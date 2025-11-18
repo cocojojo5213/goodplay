@@ -63,6 +63,25 @@ $f3->route('GET /api/users/@id', 'UserController->show');
 $f3->route('PUT /api/users/@id', 'UserController->update');
 $f3->route('DELETE /api/users/@id', 'UserController->delete');
 
+// 従業員管理路由
+$f3->route('GET /api/employees', 'EmployeeController->index');
+$f3->route('POST /api/employees', 'EmployeeController->create');
+$f3->route('GET /api/employees/statistics', 'EmployeeController->statistics');
+$f3->route('GET /api/employees/@id', 'EmployeeController->show');
+$f3->route('PUT /api/employees/@id', 'EmployeeController->update');
+$f3->route('DELETE /api/employees/@id', 'EmployeeController->delete');
+
+// 従業員関連データ路由
+$f3->route('GET /api/employees/@id/certificates', 'EmployeeController->certificates');
+$f3->route('GET /api/employees/@id/work-records', 'EmployeeController->workRecords');
+$f3->route('GET /api/employees/@id/documents', 'EmployeeController->documents');
+
+// 緊急連絡先とビザ情報路由
+$f3->route('GET /api/employees/@id/emergency-contact', 'EmployeeController->getEmergencyContact');
+$f3->route('PUT /api/employees/@id/emergency-contact', 'EmployeeController->updateEmergencyContact');
+$f3->route('GET /api/employees/@id/visa', 'EmployeeController->getVisaInfo');
+$f3->route('PUT /api/employees/@id/visa', 'EmployeeController->updateVisaInfo');
+
 // 错误处理
 $f3->set('ONERROR', function($f3) {
     $error = [
