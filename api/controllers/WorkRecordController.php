@@ -15,6 +15,7 @@ class WorkRecordController extends BaseController {
     private $service;
     
     public function __construct() {
+        parent::__construct();
         $this->service = new WorkRecordService();
     }
     
@@ -114,7 +115,7 @@ class WorkRecordController extends BaseController {
             }
             
             $recordId = $this->service->createWorkRecord($payload);
-            $this->logActivity($user['user_id'], 'create', 'work_records', $recordId, null, $payload);
+            $this->loggingService->logCreate($user['user_id'], 'work_records', $recordId, $payload);
             
             $record = $this->service->getWorkRecord($recordId);
             
@@ -123,8 +124,10 @@ class WorkRecordController extends BaseController {
                 'record' => $record
             ], 201);
         } catch (Exception $e) {
-            error_log('勤務記録作成エラー: ' . $e->getMessage());
-            $this->respondError('勤務記録の作成に失敗しました', 500);
+            FileLogger::error('勤務記録作成エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null
+            ]);
+            ResponseHelper::serverError('勤務記録の作成に失敗しました', $e);
         }
     }
     
@@ -180,7 +183,7 @@ class WorkRecordController extends BaseController {
                 $newValues[$field] = $value;
             }
             
-            $this->logActivity($user['user_id'], 'update', 'work_records', $id, $oldValues, $newValues);
+            $this->loggingService->logUpdate($user['user_id'], 'work_records', $id, $oldValues, $newValues);
             
             $updated = $this->service->getWorkRecord($id);
             
@@ -189,8 +192,11 @@ class WorkRecordController extends BaseController {
                 'record' => $updated
             ]);
         } catch (Exception $e) {
-            error_log('勤務記録更新エラー: ' . $e->getMessage());
-            $this->respondError('勤務記録の更新に失敗しました', 500);
+            FileLogger::error('勤務記録更新エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null,
+                'record_id' => $id
+            ]);
+            ResponseHelper::serverError('勤務記録の更新に失敗しました', $e);
         }
     }
     
@@ -213,12 +219,15 @@ class WorkRecordController extends BaseController {
             }
             
             $this->service->deleteWorkRecord($id);
-            $this->logActivity($user['user_id'], 'delete', 'work_records', $id, $existing, null);
+            $this->loggingService->logDelete($user['user_id'], 'work_records', $id, $existing);
             
             $this->respondSuccess(['message' => '勤務記録を削除しました']);
         } catch (Exception $e) {
-            error_log('勤務記録削除エラー: ' . $e->getMessage());
-            $this->respondError('勤務記録の削除に失敗しました', 500);
+            FileLogger::error('勤務記録削除エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null,
+                'record_id' => $id
+            ]);
+            ResponseHelper::serverError('勤務記録の削除に失敗しました', $e);
         }
     }
     
