@@ -14,8 +14,8 @@
               {{ $t('dashboard.welcome') }}, {{ authStore.user?.full_name }}
             </span>
             <button
-              @click="handleLogout"
               class="text-sm text-gray-500 hover:text-gray-700"
+              @click="handleLogout"
             >
               {{ $t('auth.logout') }}
             </button>
@@ -33,8 +33,18 @@
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    <svg
+                      class="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -57,8 +67,18 @@
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      class="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -81,8 +101,18 @@
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <div class="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      class="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -105,8 +135,18 @@
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <div class="w-8 h-8 bg-red-500 rounded-md flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <svg
+                      class="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -137,8 +177,18 @@
             >
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                  <svg
+                    class="h-8 w-8 text-blue-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                    />
                   </svg>
                 </div>
                 <div class="ml-4">
@@ -158,8 +208,18 @@
             >
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-8 w-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  <svg
+                    class="h-8 w-8 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
                   </svg>
                 </div>
                 <div class="ml-4">
@@ -179,8 +239,18 @@
             >
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-8 w-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01M12 16h.01" />
+                  <svg
+                    class="h-8 w-8 text-purple-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01M12 16h.01"
+                    />
                   </svg>
                 </div>
                 <div class="ml-4">
@@ -203,17 +273,23 @@
           </h3>
           <div class="bg-white shadow rounded-lg">
             <div class="p-6">
-              <div v-if="recentActivities.length === 0" class="text-center text-gray-500 py-8">
+              <div
+                v-if="recentActivities.length === 0"
+                class="text-center text-gray-500 py-8"
+              >
                 {{ $t('messages.noData') }}
               </div>
-              <div v-else class="space-y-4">
+              <div
+                v-else
+                class="space-y-4"
+              >
                 <div
                   v-for="activity in recentActivities"
                   :key="activity.id"
                   class="flex items-start space-x-3"
                 >
                   <div class="flex-shrink-0">
-                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-2" />
                   </div>
                   <div class="flex-1">
                     <p class="text-sm text-gray-900">
@@ -244,7 +320,7 @@ export default {
   setup() {
     const router = useRouter()
     const authStore = useAuthStore()
-    const { t } = useI18n()
+    useI18n()
     
     const stats = reactive({
       totalEmployees: 0,
