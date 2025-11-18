@@ -81,6 +81,23 @@ api/
 | PUT | `/api/users/{id}` | ユーザー更新 |
 | DELETE | `/api/users/{id}` | ユーザー削除 |
 
+### 文書管理
+
+| メソッド | エンドポイント | 説明 |
+|---------|---------------|------|
+| GET | `/api/documents` | 文書一覧取得 |
+| POST | `/api/documents` | 文書アップロード |
+| GET | `/api/documents/{id}` | 文書詳細取得 |
+| PUT | `/api/documents/{id}` | 文書更新 |
+| DELETE | `/api/documents/{id}` | 文書削除 |
+| GET | `/api/documents/{id}/download` | 文書ダウンロード |
+| GET | `/api/documents/{id}/check-expiry` | 有効期限チェック |
+| GET | `/api/documents/expiring` | 期限間近の文書一覧 |
+| GET | `/api/documents/expired` | 期限切れの文書一覧 |
+| POST | `/api/documents/update-expiry-statuses` | 有効期限ステータス一括更新 |
+
+詳細は [DOCUMENT_API.md](DOCUMENT_API.md) を参照してください。
+
 ### システム関連
 
 | メソッド | エンドポイント | 説明 |
