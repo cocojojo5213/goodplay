@@ -3,18 +3,18 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', () => {
-  // 状态
+  // 状態
   const user = ref(null)
   const token = ref(localStorage.getItem('auth_token'))
   const loading = ref(false)
   const error = ref(null)
   
-  // 计算属性
+  // 計算属性
   const isAuthenticated = computed(() => !!token.value && !!user.value)
   const isAdmin = computed(() => user.value?.role === 'admin')
   const userRole = computed(() => user.value?.role || 'guest')
   
-  // API 配置
+  // API設定
   const api = axios.create({
     baseURL: '/api',
     timeout: 10000,
@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   })
   
-  // 请求拦截器 - 添加认证令牌
+  // リクエストインターセプター - 認証トークンを付加
   api.interceptors.request.use(
     (config) => {
       if (token.value) {
@@ -36,21 +36,21 @@ export const useAuthStore = defineStore('auth', () => {
     }
   )
   
-  // 响应拦截器 - 处理认证错误
+  // レスポンスインターセプター - 認証エラーを処理
   api.interceptors.response.use(
     (response) => {
       return response
     },
     (error) => {
       if (error.response?.status === 401) {
-        // 认证失败，清除本地状态
+        // 認証失敗、ローカル状態をクリア
         logout()
       }
       return Promise.reject(error)
     }
   )
   
-  // 登录
+  // ログイン
   const login = async (credentials) => {
     loading.value = true
     error.value = null
@@ -59,13 +59,23 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await api.post('/auth/login', credentials)
       const { token: authToken, user: userData } = response.data
       
-      // 保存令牌和用户信息
+      // トークンとユーザー情報を保存
       token.value = authToken
       user.value = userData
       
-      // 保存到本地存储
+      // ローカルストレージに保存
       localStorage.setItem('auth_token', authToken)
       localStorage.setItem('auth_user', JSON.stringify(userData))
+      
+      // プリロードを実行
+      if (userData?.role) {
+        try {
+          const { preloadAllDataOnLogin } = await import('@/utils/preload')
+          await preloadAllDataOnLogin(userData.role)
+        } catch (preloadErr) {
+          console.warn('ログイン時のデータプリロードに失敗しました:', preloadErr)
+        }
+      }
       
       return { success: true, data: response.data }
     } catch (err) {
@@ -76,27 +86,35 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   
-  // 登出
+  // ログアウト
   const logout = async () => {
     try {
       if (token.value) {
         await api.post('/auth/logout')
       }
     } catch (err) {
-      console.error('登出请求失败:', err)
+      console.error('ログアウトリクエスト失敗:', err)
     } finally {
-      // 清除本地状态
+      // ローカル状態をクリア
       token.value = null
       user.value = null
       error.value = null
       
-      // 清除本地存储
+      // ローカルストレージをクリア
       localStorage.removeItem('auth_token')
       localStorage.removeItem('auth_user')
+      
+      // すべてのストアをリセット
+      try {
+        const { resetAllStores } = await import('@/utils/preload')
+        resetAllStores()
+      } catch (resetErr) {
+        console.warn('ストアのリセットに失敗しました:', resetErr)
+      }
     }
   }
   
-  // 获取当前用户信息
+  // 現在のユーザー情報を取得
   const fetchUser = async () => {
     if (!token.value) return null
     
@@ -107,14 +125,14 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await api.get('/auth/me')
       user.value = response.data.user
       
-      // 更新本地存储
+      // ローカルストレージを更新
       localStorage.setItem('auth_user', JSON.stringify(user.value))
       
       return user.value
     } catch (err) {
       error.value = err.response?.data?.error || 'ユーザー情報の取得に失敗しました'
       
-      // 如果获取失败，清除认证状态
+      // 取得失敗時は認証状態をクリア
       if (err.response?.status === 401) {
         await logout()
       }
@@ -125,7 +143,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   
-  // 恢复认证状态
+  // 認証状態をリストア
   const restoreAuth = async () => {
     const savedToken = localStorage.getItem('auth_token')
     const savedUser = localStorage.getItem('auth_user')
@@ -135,12 +153,22 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = savedToken
         user.value = JSON.parse(savedUser)
         
-        // 验证令牌是否仍然有效
+        // トークンがまだ有効か検証
         await fetchUser()
+        
+        // リストア時のプリロードを実行
+        if (user.value?.role) {
+          try {
+            const { preloadAllDataOnRestore } = await import('@/utils/preload')
+            await preloadAllDataOnRestore(user.value.role)
+          } catch (preloadErr) {
+            console.warn('リストア時のデータプリロードに失敗しました:', preloadErr)
+          }
+        }
         
         return true
       } catch (err) {
-        // 令牌无效，清除状态
+        // トークンが無効、状態をクリア
         await logout()
         return false
       }
@@ -149,20 +177,20 @@ export const useAuthStore = defineStore('auth', () => {
     return false
   }
   
-  // 更新用户信息
+  // ユーザー情報を更新
   const updateUser = (userData) => {
     user.value = { ...user.value, ...userData }
     localStorage.setItem('auth_user', JSON.stringify(user.value))
   }
   
-  // 检查权限
+  // 権限をチェック
   const hasPermission = (permission) => {
     if (!user.value) return false
     
-    // 管理员拥有所有权限
+    // 管理者はすべての権限を持つ
     if (user.value.role === 'admin') return true
     
-    // 根据用户角色检查权限
+    // ユーザーロールに応じて権限をチェック
     const permissions = {
       user: ['read', 'update_profile'],
       manager: ['read', 'write', 'update_profile', 'manage_employees'],
@@ -173,17 +201,17 @@ export const useAuthStore = defineStore('auth', () => {
     return userPermissions.includes('*') || userPermissions.includes(permission)
   }
   
-  // 检查路由权限
+  // ルートアクセス権限をチェック
   const canAccess = (route) => {
     if (!route.meta?.requiresAuth) return true
     if (!isAuthenticated.value) return false
     
-    // 检查角色权限
+    // ロール権限をチェック
     if (route.meta?.roles && !route.meta.roles.includes(userRole.value)) {
       return false
     }
     
-    // 检查权限
+    // 権限をチェック
     if (route.meta?.permissions) {
       return route.meta.permissions.some(permission => hasPermission(permission))
     }
@@ -192,18 +220,18 @@ export const useAuthStore = defineStore('auth', () => {
   }
   
   return {
-    // 状态
+    // 状態
     user,
     token,
     loading,
     error,
     
-    // 计算属性
+    // 計算属性
     isAuthenticated,
     isAdmin,
     userRole,
     
-    // 方法
+    // メソッド
     login,
     logout,
     fetchUser,
@@ -212,7 +240,7 @@ export const useAuthStore = defineStore('auth', () => {
     hasPermission,
     canAccess,
     
-    // API 实例
+    // APIインスタンス
     api
   }
 })
