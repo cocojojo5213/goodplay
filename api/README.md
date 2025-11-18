@@ -113,13 +113,23 @@ Authorization: Bearer {token}
 
 主要なテーブル：
 
-- `users` - ユーザー情報
-- `employees` - 従業員情報
-- `certificates` - 資格証明書
-- `work_records` - 勤怠記録
-- `documents` - 書類管理
-- `system_logs` - システムログ
-- `sessions` - セッション管理
+- `users` - ユーザー情報（ログインアカウント管理）
+- `employees` - 従業員情報（特定技能外国人従業員の基本情報）
+- `certificates` - 資格証明書（資格・免許・証明書の管理）
+- `work_records` - 勤怠記録（日々の勤務記録・シフト管理）
+- `documents` - 書類管理（在留カード・契約書等の書類）
+- `system_logs` - システムログ（監査証跡）
+- `sessions` - セッション管理（ログインセッション）
+
+詳細なスキーマ情報は [schema/README.md](schema/README.md) を参照してください。
+
+### 主な機能
+
+- **自動タイムスタンプ更新**: updated_atカラムは更新時に自動的に現在時刻に更新されます（トリガー）
+- **外部キー制約**: データ整合性のためのカスケード削除・NULL設定
+- **CHECK制約**: ENUM相当の値制限（role、status、gender等）
+- **ユニーク制約**: 重複防止（employee_number、username、work_date等）
+- **インデックス**: 検索パフォーマンス向上のための最適化
 
 ## 開発ガイドライン
 
