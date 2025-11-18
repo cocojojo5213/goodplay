@@ -94,6 +94,15 @@ $f3->route('DELETE /api/documents/@id', 'DocumentController->delete');
 $f3->route('GET /api/documents/@id/download', 'DocumentController->download');
 $f3->route('GET /api/documents/@id/check-expiry', 'DocumentController->checkExpiry');
 
+// 勤務記録管理路由
+$f3->route('GET /api/work-records', 'WorkRecordController->index');
+$f3->route('POST /api/work-records', 'WorkRecordController->create');
+$f3->route('GET /api/work-records/summary', 'WorkRecordController->summary');
+$f3->route('GET /api/work-records/period-summary', 'WorkRecordController->periodSummary');
+$f3->route('GET /api/work-records/@id', 'WorkRecordController->show');
+$f3->route('PUT /api/work-records/@id', 'WorkRecordController->update');
+$f3->route('DELETE /api/work-records/@id', 'WorkRecordController->delete');
+
 // 错误处理
 $f3->set('ONERROR', function($f3) {
     $error = [
