@@ -7,6 +7,7 @@ const Dashboard = () => import('@/views/Dashboard.vue')
 const Employees = () => import('@/views/Employees.vue')
 const EmployeeDetail = () => import('@/views/EmployeeDetail.vue')
 const Documents = () => import('@/views/Documents.vue')
+const Reports = () => import('@/views/Reports.vue')
 const Settings = () => import('@/views/Settings.vue')
 const NotFound = () => import('@/views/NotFound.vue')
 
@@ -61,6 +62,16 @@ const routes = [
     component: Documents,
     meta: {
       title: '書類管理',
+      requiresAuth: true,
+      layout: 'default'
+    }
+  },
+  {
+    path: '/reports',
+    name: 'Reports',
+    component: Reports,
+    meta: {
+      title: 'レポート',
       requiresAuth: true,
       layout: 'default'
     }
