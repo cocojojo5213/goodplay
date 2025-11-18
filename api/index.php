@@ -103,6 +103,13 @@ $f3->route('GET /api/work-records/@id', 'WorkRecordController->show');
 $f3->route('PUT /api/work-records/@id', 'WorkRecordController->update');
 $f3->route('DELETE /api/work-records/@id', 'WorkRecordController->delete');
 
+// レポート管理路由
+$f3->route('GET /api/reports/overview', 'ReportController->overview');
+$f3->route('GET /api/reports/attendance', 'ReportController->attendance');
+$f3->route('GET /api/reports/export', 'ReportController->export');
+$f3->route('GET /api/reports/types', 'ReportController->types');
+$f3->route('GET /api/reports/status', 'ReportController->status');
+
 // 错误处理
 $f3->set('ONERROR', function($f3) {
     $error = [
