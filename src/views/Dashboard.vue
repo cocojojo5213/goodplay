@@ -174,21 +174,21 @@
             </router-link>
 
             <router-link
-              to="/reports"
+              to="/work-records"
               class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
             >
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <svg class="h-8 w-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01M12 16h.01" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div class="ml-4">
                   <h4 class="text-base font-medium text-gray-900">
-                    {{ $t('reports.title') }}
+                    {{ $t('workRecords.title') }}
                   </h4>
                   <p class="mt-1 text-sm text-gray-500">
-                    レポートを生成する
+                    勤怠記録を管理する
                   </p>
                 </div>
               </div>
