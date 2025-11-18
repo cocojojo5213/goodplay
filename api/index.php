@@ -82,6 +82,18 @@ $f3->route('PUT /api/employees/@id/emergency-contact', 'EmployeeController->upda
 $f3->route('GET /api/employees/@id/visa', 'EmployeeController->getVisaInfo');
 $f3->route('PUT /api/employees/@id/visa', 'EmployeeController->updateVisaInfo');
 
+// 文書管理路由
+$f3->route('GET /api/documents', 'DocumentController->index');
+$f3->route('POST /api/documents', 'DocumentController->create');
+$f3->route('GET /api/documents/expiring', 'DocumentController->expiringDocuments');
+$f3->route('GET /api/documents/expired', 'DocumentController->expiredDocuments');
+$f3->route('POST /api/documents/update-expiry-statuses', 'DocumentController->updateExpiryStatuses');
+$f3->route('GET /api/documents/@id', 'DocumentController->show');
+$f3->route('PUT /api/documents/@id', 'DocumentController->update');
+$f3->route('DELETE /api/documents/@id', 'DocumentController->delete');
+$f3->route('GET /api/documents/@id/download', 'DocumentController->download');
+$f3->route('GET /api/documents/@id/check-expiry', 'DocumentController->checkExpiry');
+
 // 错误处理
 $f3->set('ONERROR', function($f3) {
     $error = [
