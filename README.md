@@ -135,6 +135,12 @@ php -S localhost:8000 -t api
 
 バックエンドAPIサーバーは `http://localhost:8000` で起動します。
 
+### データベーススキーマドキュメント
+
+- 最新のDDLと制約定義は `api/schema/schema.sql` にあります
+- 各テーブル・インデックス・トリガーの詳細説明は `api/schema/README.md` を参照してください
+- 初期データの投入内容やサンプルレコードは `php api/setup.php` 実行時に自動で作成されます
+
 ### 5. アプリケーションへのアクセス
 
 ブラウザで `http://localhost:3000` にアクセスします。
