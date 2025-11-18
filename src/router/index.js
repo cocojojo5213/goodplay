@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useLoadingStore } from '@/stores/loading'
 
 // 路由组件懒加载
 const Login = () => import('@/views/Login.vue')
@@ -8,6 +9,7 @@ const Employees = () => import('@/views/Employees.vue')
 const EmployeeDetail = () => import('@/views/EmployeeDetail.vue')
 const Documents = () => import('@/views/Documents.vue')
 const Settings = () => import('@/views/Settings.vue')
+const Forbidden = () => import('@/views/Forbidden.vue')
 const NotFound = () => import('@/views/NotFound.vue')
 
 const routes = [
@@ -32,7 +34,8 @@ const routes = [
     meta: {
       title: 'ダッシュボード',
       requiresAuth: true,
-      layout: 'default'
+      layout: 'default',
+      roles: ['admin', 'manager', 'user']
     }
   },
   {
@@ -42,7 +45,9 @@ const routes = [
     meta: {
       title: '従業員管理',
       requiresAuth: true,
-      layout: 'default'
+      layout: 'default',
+      roles: ['admin', 'manager'],
+      permissions: ['manage_employees']
     }
   },
   {
@@ -52,7 +57,9 @@ const routes = [
     meta: {
       title: '従業員詳細',
       requiresAuth: true,
-      layout: 'default'
+      layout: 'default',
+      roles: ['admin', 'manager'],
+      permissions: ['manage_employees']
     }
   },
   {
@@ -62,7 +69,9 @@ const routes = [
     meta: {
       title: '書類管理',
       requiresAuth: true,
-      layout: 'default'
+      layout: 'default',
+      roles: ['admin', 'manager', 'user'],
+      permissions: ['read']
     }
   },
   {
@@ -72,7 +81,18 @@ const routes = [
     meta: {
       title: '設定',
       requiresAuth: true,
-      layout: 'default'
+      layout: 'default',
+      roles: ['admin', 'manager']
+    }
+  },
+  {
+    path: '/forbidden',
+    name: 'Forbidden',
+    component: Forbidden,
+    meta: {
+      title: 'アクセス拒否',
+      requiresAuth: false,
+      layout: 'minimal'
     }
   },
   {
@@ -102,37 +122,66 @@ const router = createRouter({
 // 路由守卫
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+  const loadingStore = useLoadingStore()
   
-  // 设置页面标题
-  if (to.meta.title) {
-    document.title = `${to.meta.title} - 特定技能職員管理システム`
-  }
+  // グローバルローディング開始
+  loadingStore.startLoading()
   
-  // 检查是否需要身份验证
-  if (to.meta.requiresAuth) {
-    // 检查是否已登录
-    if (!authStore.isAuthenticated) {
-      // 尝试从本地存储恢复用户状态
-      await authStore.restoreAuth()
-      
+  try {
+    // ページタイトルの設定
+    if (to.meta.title) {
+      document.title = `${to.meta.title} - 特定技能職員管理システム`
+    }
+    
+    // 認証が必要なルートのチェック
+    if (to.meta.requiresAuth) {
+      // ログイン状態の確認
       if (!authStore.isAuthenticated) {
-        // 未登录，重定向到登录页
+        // ローカルストレージから認証状態を復元
+        await authStore.restoreAuth()
+        
+        if (!authStore.isAuthenticated) {
+          // 未ログイン、ログインページへリダイレクト
+          next({
+            name: 'Login',
+            query: { redirect: to.fullPath }
+          })
+          return
+        }
+      }
+      
+      // ロール・パーミッションチェック
+      if (!authStore.canAccess(to)) {
+        // 権限不足、403ページへリダイレクト
         next({
-          name: 'Login',
-          query: { redirect: to.fullPath }
+          name: 'Forbidden',
+          query: { from: to.fullPath }
         })
         return
       }
     }
+    
+    // ログイン済みユーザーがログインページにアクセスした場合
+    if (to.name === 'Login' && authStore.isAuthenticated) {
+      next({ name: 'Dashboard' })
+      return
+    }
+    
+    next()
+  } catch (error) {
+    console.error('Router navigation error:', error)
+    loadingStore.stopLoading()
+    next(false)
   }
-  
-  // 如果已登录且访问登录页，重定向到仪表板
-  if (to.name === 'Login' && authStore.isAuthenticated) {
-    next({ name: 'Dashboard' })
-    return
-  }
-  
-  next()
+})
+
+// ルート遷移完了後のフック
+router.afterEach(() => {
+  const loadingStore = useLoadingStore()
+  // 遷移完了後、少し遅延してローディングを停止
+  setTimeout(() => {
+    loadingStore.stopLoading()
+  }, 200)
 })
 
 export default router
