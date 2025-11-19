@@ -17,6 +17,7 @@ class DocumentController extends BaseController {
     private $employeeRepo;
     
     public function __construct() {
+        parent::__construct();
         $this->service = new DocumentService();
         $this->documentRepo = new DocumentRepository();
         $this->employeeRepo = new EmployeeRepository();
@@ -61,8 +62,8 @@ class DocumentController extends BaseController {
                 'filters' => $filters
             ]);
         } catch (Exception $e) {
-            error_log('文書一覧取得エラー: ' . $e->getMessage());
-            $this->respondError('文書一覧の取得に失敗しました', 500);
+            FileLogger::error('文書一覧取得エラー: ' . $e->getMessage());
+            ResponseHelper::serverError('文書一覧の取得に失敗しました', $e);
         }
     }
     
@@ -156,16 +157,15 @@ class DocumentController extends BaseController {
             );
             
             // アクティビティログ
-            $this->logActivity(
+            $this->loggingService->logUpload(
                 $user['id'],
-                'ファイルアップロード',
                 'documents',
                 $documentId,
-                null,
                 [
                     'document_name' => $data['document_name'],
                     'category' => $data['category'],
-                    'employee_id' => $data['employee_id']
+                    'employee_id' => $data['employee_id'],
+                    'file_size' => $data['file_size']
                 ]
             );
             
@@ -227,9 +227,8 @@ class DocumentController extends BaseController {
             $this->service->updateDocument($documentId, $data, $file, $user['id']);
             
             // アクティビティログ
-            $this->logActivity(
+            $this->loggingService->logUpdate(
                 $user['id'],
-                'ファイル更新',
                 'documents',
                 $documentId,
                 $oldValues,
@@ -270,13 +269,11 @@ class DocumentController extends BaseController {
             $this->service->deleteDocument($documentId);
             
             // アクティビティログ
-            $this->logActivity(
+            $this->loggingService->logDelete(
                 $user['id'],
-                'ファイル削除',
                 'documents',
                 $documentId,
-                $document,
-                null
+                $document
             );
             
             $this->respondSuccess(['message' => '文書を正常に削除しました']);
@@ -327,13 +324,14 @@ class DocumentController extends BaseController {
             }
             
             // アクティビティログ
-            $this->logActivity(
+            $this->loggingService->logDownload(
                 $user['id'],
-                'ファイルダウンロード',
                 'documents',
                 $documentId,
-                null,
-                ['file_name' => $document['file_name']]
+                [
+                    'file_name' => $document['file_name'],
+                    'document_name' => $document['document_name']
+                ]
             );
             
             // ファイル送信
@@ -445,13 +443,14 @@ class DocumentController extends BaseController {
             $updated = $this->service->updateExpiryStatuses();
             
             // アクティビティログ
-            $this->logActivity(
+            $this->loggingService->log(
                 $user['id'],
-                '有効期限ステータス一括更新',
+                'update_expiry_status',
                 'documents',
                 null,
                 null,
-                ['updated_count' => $updated]
+                ['updated_count' => $updated],
+                true
             );
             
             $this->respondSuccess([

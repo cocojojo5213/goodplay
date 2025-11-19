@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
+import { useLoadingStore } from '@/stores/loading'
 
 export const useAuthStore = defineStore('auth', () => {
   // 状態
@@ -15,6 +16,9 @@ export const useAuthStore = defineStore('auth', () => {
   const userRole = computed(() => user.value?.role || 'guest')
   
   // API設定
+  // API 配置
+  const loadingStore = useLoadingStore()
+  
   const api = axios.create({
     baseURL: '/api',
     timeout: 10000,
@@ -24,26 +28,41 @@ export const useAuthStore = defineStore('auth', () => {
   })
   
   // リクエストインターセプター - 認証トークンを付加
+  // 请求拦截器 - 添加认証令牌
   api.interceptors.request.use(
     (config) => {
+      loadingStore.startRequest()
+      
       if (token.value) {
         config.headers.Authorization = `Bearer ${token.value}`
       }
       return config
     },
     (error) => {
+      loadingStore.finishRequest()
       return Promise.reject(error)
     }
   )
   
   // レスポンスインターセプター - 認証エラーを処理
+  // セッションタイムアウトフラグ
+  const sessionExpired = ref(false)
+  
+  // 响应拦截器 - 处理认证错误
   api.interceptors.response.use(
     (response) => {
+      loadingStore.finishRequest()
       return response
     },
     (error) => {
+      loadingStore.finishRequest()
       if (error.response?.status === 401) {
         // 認証失敗、ローカル状態をクリア
+        // セッション期限切れを検知
+        if (isAuthenticated.value) {
+          sessionExpired.value = true
+        }
+        // 认证失败，清除本地状态
         logout()
       }
       return Promise.reject(error)
@@ -62,6 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
       // トークンとユーザー情報を保存
       token.value = authToken
       user.value = userData
+      sessionExpired.value = false
       
       // ローカルストレージに保存
       localStorage.setItem('auth_token', authToken)
@@ -99,6 +119,7 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = null
       user.value = null
       error.value = null
+      sessionExpired.value = false
       
       // ローカルストレージをクリア
       localStorage.removeItem('auth_token')
@@ -155,6 +176,7 @@ export const useAuthStore = defineStore('auth', () => {
         
         // トークンがまだ有効か検証
         await fetchUser()
+        sessionExpired.value = false
         
         // リストア時のプリロードを実行
         if (user.value?.role) {
@@ -219,12 +241,17 @@ export const useAuthStore = defineStore('auth', () => {
     return true
   }
   
+  const clearSessionExpired = () => {
+    sessionExpired.value = false
+  }
+
   return {
     // 状態
     user,
     token,
     loading,
     error,
+    sessionExpired,
     
     // 計算属性
     isAuthenticated,
@@ -239,6 +266,7 @@ export const useAuthStore = defineStore('auth', () => {
     updateUser,
     hasPermission,
     canAccess,
+    clearSessionExpired,
     
     // APIインスタンス
     api
