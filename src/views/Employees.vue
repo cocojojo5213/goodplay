@@ -13,29 +13,56 @@
           </div>
           <button
             v-if="canCreate"
-            @click="openCreateModal"
             class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+            @click="openCreateModal"
           >
-            <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            <svg
+              class="mr-2 h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
             </svg>
             {{ $t('employees.addEmployee') }}
           </button>
         </div>
         
-        <div v-if="statistics && canViewStatistics" class="mb-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          v-if="statistics && canViewStatistics"
+          class="mb-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+        >
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <svg
+                    class="h-6 w-6 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
                   </svg>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">{{ $t('employees.totalEmployees') }}</dt>
-                    <dd class="text-2xl font-semibold text-gray-900">{{ statistics.total || 0 }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 truncate">
+                      {{ $t('employees.totalEmployees') }}
+                    </dt>
+                    <dd class="text-2xl font-semibold text-gray-900">
+                      {{ statistics.total || 0 }}
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -46,14 +73,28 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    class="h-6 w-6 text-green-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">{{ $t('employees.totalActive') }}</dt>
-                    <dd class="text-2xl font-semibold text-gray-900">{{ statistics.active || 0 }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 truncate">
+                      {{ $t('employees.totalActive') }}
+                    </dt>
+                    <dd class="text-2xl font-semibold text-gray-900">
+                      {{ statistics.active || 0 }}
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -64,14 +105,28 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  <svg
+                    class="h-6 w-6 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
                   </svg>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">{{ $t('employees.totalExpiring') }}</dt>
-                    <dd class="text-2xl font-semibold text-gray-900">{{ statistics.visa_expiring || 0 }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 truncate">
+                      {{ $t('employees.totalExpiring') }}
+                    </dt>
+                    <dd class="text-2xl font-semibold text-gray-900">
+                      {{ statistics.visa_expiring || 0 }}
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -82,14 +137,28 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  <svg
+                    class="h-6 w-6 text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
                   </svg>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">{{ $t('employees.totalNewThisMonth') }}</dt>
-                    <dd class="text-2xl font-semibold text-gray-900">{{ statistics.new_this_month || 0 }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 truncate">
+                      {{ $t('employees.totalNewThisMonth') }}
+                    </dt>
+                    <dd class="text-2xl font-semibold text-gray-900">
+                      {{ statistics.new_this_month || 0 }}
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -107,24 +176,34 @@
                   :placeholder="$t('employees.searchEmployee')"
                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   @input="debouncedSearch"
-                />
+                >
               </div>
               <div class="flex gap-2">
                 <select
                   v-model="localFilters.status"
-                  @change="applyFilters"
                   class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  @change="applyFilters"
                 >
-                  <option value="">ステータス: すべて</option>
-                  <option value="active">{{ $t('employees.active') }}</option>
-                  <option value="inactive">{{ $t('employees.inactive') }}</option>
-                  <option value="on_leave">{{ $t('employees.onLeave') }}</option>
-                  <option value="probation">{{ $t('employees.probation') }}</option>
+                  <option value="">
+                    ステータス: すべて
+                  </option>
+                  <option value="active">
+                    {{ $t('employees.active') }}
+                  </option>
+                  <option value="inactive">
+                    {{ $t('employees.inactive') }}
+                  </option>
+                  <option value="on_leave">
+                    {{ $t('employees.onLeave') }}
+                  </option>
+                  <option value="probation">
+                    {{ $t('employees.probation') }}
+                  </option>
                 </select>
                 
                 <button
-                  @click="resetFilters"
                   class="px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                  @click="resetFilters"
                 >
                   {{ $t('common.reset') }}
                 </button>
@@ -132,50 +211,83 @@
             </div>
           </div>
           
-          <div v-if="loading" class="p-8">
+          <div
+            v-if="loading"
+            class="p-8"
+          >
             <div class="space-y-4">
-              <div v-for="i in 5" :key="i" class="animate-pulse flex space-x-4">
-                <div class="rounded-full bg-gray-200 h-12 w-12"></div>
+              <div
+                v-for="i in 5"
+                :key="i"
+                class="animate-pulse flex space-x-4"
+              >
+                <div class="rounded-full bg-gray-200 h-12 w-12" />
                 <div class="flex-1 space-y-2 py-1">
-                  <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-                  <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                  <div class="h-4 bg-gray-200 rounded w-3/4" />
+                  <div class="h-4 bg-gray-200 rounded w-1/2" />
                 </div>
               </div>
             </div>
           </div>
           
-          <div v-else-if="employees.length === 0" class="p-8">
+          <div
+            v-else-if="employees.length === 0"
+            class="p-8"
+          >
             <div class="text-center text-gray-500">
-              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <svg
+                class="mx-auto h-12 w-12 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                />
               </svg>
-              <h3 class="mt-4 text-lg font-medium text-gray-900">従業員が見つかりません</h3>
+              <h3 class="mt-4 text-lg font-medium text-gray-900">
+                従業員が見つかりません
+              </h3>
               <p class="mt-2 text-sm text-gray-500">
                 {{ searchQuery ? '検索条件を変更してください' : '従業員を追加してください' }}
               </p>
             </div>
           </div>
           
-          <div v-else class="overflow-x-auto">
+          <div
+            v-else
+            class="overflow-x-auto"
+          >
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    @click="toggleSort('employee_number')"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    @click="toggleSort('employee_number')"
                   >
                     <div class="flex items-center">
                       {{ $t('employees.employeeNumber') }}
-                      <SortIcon :field="'employee_number'" :currentField="sortField" :direction="sortDirection" />
+                      <SortIcon
+                        :field="'employee_number'"
+                        :current-field="sortField"
+                        :direction="sortDirection"
+                      />
                     </div>
                   </th>
                   <th
-                    @click="toggleSort('full_name')"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    @click="toggleSort('full_name')"
                   >
                     <div class="flex items-center">
                       {{ $t('employees.fullName') }}
-                      <SortIcon :field="'full_name'" :currentField="sortField" :direction="sortDirection" />
+                      <SortIcon
+                        :field="'full_name'"
+                        :current-field="sortField"
+                        :direction="sortDirection"
+                      />
                     </div>
                   </th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -185,12 +297,16 @@
                     {{ $t('employees.position') }}
                   </th>
                   <th
-                    @click="toggleSort('hire_date')"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    @click="toggleSort('hire_date')"
                   >
                     <div class="flex items-center">
                       {{ $t('employees.hireDate') }}
-                      <SortIcon :field="'hire_date'" :currentField="sortField" :direction="sortDirection" />
+                      <SortIcon
+                        :field="'hire_date'"
+                        :current-field="sortField"
+                        :direction="sortDirection"
+                      />
                     </div>
                   </th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -212,8 +328,12 @@
                     {{ employee.employee_number }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">{{ employee.full_name }}</div>
-                    <div class="text-sm text-gray-500">{{ employee.email || '未設定' }}</div>
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ employee.full_name }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                      {{ employee.email || '未設定' }}
+                    </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ employee.department || '未設定' }}
@@ -225,22 +345,28 @@
                     {{ employee.hire_date || '未設定' }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span :class="getStatusBadgeClass(employee.status)" class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full">
+                    <span
+                      :class="getStatusBadgeClass(employee.status)"
+                      class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
+                    >
                       {{ getStatusLabel(employee.status) }}
                     </span>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium" @click.stop>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                    @click.stop
+                  >
                     <button
                       v-if="canEdit"
-                      @click="openEditModal(employee)"
                       class="text-blue-600 hover:text-blue-900 mr-3"
+                      @click="openEditModal(employee)"
                     >
                       {{ $t('common.edit') }}
                     </button>
                     <button
                       v-if="canDelete"
-                      @click="confirmDelete(employee)"
                       class="text-red-600 hover:text-red-900"
+                      @click="confirmDelete(employee)"
                     >
                       {{ $t('common.delete') }}
                     </button>
@@ -250,19 +376,22 @@
             </table>
           </div>
           
-          <div v-if="pagination.totalPages > 1" class="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div
+            v-if="pagination.totalPages > 1"
+            class="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+          >
             <div class="flex-1 flex justify-between sm:hidden">
               <button
-                @click="goToPage(pagination.page - 1)"
                 :disabled="pagination.page === 1"
                 class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                @click="goToPage(pagination.page - 1)"
               >
                 {{ $t('common.previous') }}
               </button>
               <button
-                @click="goToPage(pagination.page + 1)"
                 :disabled="pagination.page === pagination.totalPages"
                 class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                @click="goToPage(pagination.page + 1)"
               >
                 {{ $t('common.next') }}
               </button>
@@ -278,100 +407,137 @@
               <div>
                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                   <button
-                    @click="goToPage(pagination.page - 1)"
                     :disabled="pagination.page === 1"
                     class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                    @click="goToPage(pagination.page - 1)"
                   >
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    <svg
+                      class="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 19l-7-7 7-7"
+                      />
                     </svg>
                   </button>
                   <button
                     v-for="page in visiblePages"
                     :key="page"
-                    @click="goToPage(page)"
                     :class="[
                       page === pagination.page
                         ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
                         : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
                       'relative inline-flex items-center px-4 py-2 border text-sm font-medium'
                     ]"
+                    @click="goToPage(page)"
                   >
                     {{ page }}
                   </button>
                   <button
-                    @click="goToPage(pagination.page + 1)"
                     :disabled="pagination.page === pagination.totalPages"
                     class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                    @click="goToPage(pagination.page + 1)"
                   >
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    <svg
+                      class="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </button>
                 </nav>
               </div>
             </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <div class="text-center text-gray-500">
-            <svg
-              class="mx-auto h-12 w-12 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+            <div class="bg-white shadow rounded-lg p-6">
+              <div class="text-center text-gray-500">
+                <svg
+                  class="mx-auto h-12 w-12 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <h3 class="mt-4 text-lg font-medium text-gray-900">
+                  従業員管理
+                </h3>
+                <p class="mt-2 text-sm text-gray-500">
+                  この機能は現在開発中です
+                </p>
+              </div>
+            </div>
+            <div>
+              <div class="mb-6">
+                <h1 class="text-2xl font-semibold text-gray-900">
+                  {{ $t('employees.title') }}
+                </h1>
+                <p class="mt-2 text-gray-600">
+                  従業員情報を管理します
+                </p>
+              </div>
+    
+              <div class="bg-white shadow rounded-lg p-6">
+                <div class="text-center text-gray-500">
+                  <svg
+                    class="mx-auto h-12 w-12 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                  <h3 class="mt-4 text-lg font-medium text-gray-900">
+                    従業員管理
+                  </h3>
+                  <p class="mt-2 text-sm text-gray-500">
+                    この機能は現在開発中です
+                  </p>
+                </div>
+              </div>
+    
+              <EmployeeModal
+                :is-open="isModalOpen"
+                :employee="editingEmployee"
+                @close="closeModal"
+                @submit="handleSubmit"
               />
-            </svg>
-            <h3 class="mt-4 text-lg font-medium text-gray-900">
-              従業員管理
-            </h3>
-            <p class="mt-2 text-sm text-gray-500">
-              この機能は現在開発中です
-            </p>
+    
+              <EmployeeDrawer
+                :is-open="isDrawerOpen"
+                :employee="selectedEmployee"
+                @close="closeDrawer"
+                @edit="openEditModal"
+                @delete="confirmDelete"
+                @edit-visa="openVisaModal"
+                @edit-emergency="openEmergencyModal"
+              />
+            </div>
           </div>
         </div>
-  <div>
-    <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-900">
-        {{ $t('employees.title') }}
-      </h1>
-      <p class="mt-2 text-gray-600">
-        従業員情報を管理します
-      </p>
-    </div>
-    
-    <div class="bg-white shadow rounded-lg p-6">
-      <div class="text-center text-gray-500">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-        <h3 class="mt-4 text-lg font-medium text-gray-900">従業員管理</h3>
-        <p class="mt-2 text-sm text-gray-500">
-          この機能は現在開発中です
-        </p>
       </div>
     </div>
-    
-    <EmployeeModal
-      :is-open="isModalOpen"
-      :employee="editingEmployee"
-      @close="closeModal"
-      @submit="handleSubmit"
-    />
-    
-    <EmployeeDrawer
-      :is-open="isDrawerOpen"
-      :employee="selectedEmployee"
-      @close="closeDrawer"
-      @edit="openEditModal"
-      @delete="confirmDelete"
-      @edit-visa="openVisaModal"
-      @edit-emergency="openEmergencyModal"
-    />
   </div>
 </template>
 

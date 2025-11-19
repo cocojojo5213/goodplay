@@ -2,7 +2,9 @@
   <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <div class="text-center">
-        <h1 class="text-9xl font-bold text-gray-300">403</h1>
+        <h1 class="text-9xl font-bold text-gray-300">
+          403
+        </h1>
         <h2 class="mt-4 text-3xl font-extrabold text-gray-900">
           {{ $t('errors.403.title') }}
         </h2>
@@ -11,8 +13,8 @@
         </p>
         <div class="mt-6 space-x-3">
           <button
-            @click="goBack"
             class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            @click="goBack"
           >
             {{ $t('common.back') }}
           </button>

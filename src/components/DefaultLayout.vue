@@ -5,11 +5,21 @@
       <div class="flex h-16">
         <!-- Mobile menu button -->
         <button
-          @click="toggleMobileSidebar"
           class="lg:hidden flex items-center justify-center w-16 h-full text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+          @click="toggleMobileSidebar"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
 
@@ -18,13 +28,25 @@
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                <svg
+                  class="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
                 </svg>
               </div>
             </div>
             <div class="ml-3">
-              <h1 class="text-xl font-semibold text-gray-900">{{ $t('layout.applicationTitle') }}</h1>
+              <h1 class="text-xl font-semibold text-gray-900">
+                {{ $t('layout.applicationTitle') }}
+              </h1>
             </div>
           </div>
         </div>
@@ -33,45 +55,89 @@
         <div class="flex items-center space-x-4 px-4 lg:px-8">
           <!-- Notifications placeholder -->
           <button class="relative p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              />
             </svg>
-            <span class="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-400"></span>
+            <span class="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-400" />
           </button>
 
           <!-- Language switcher placeholder -->
           <button class="p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+              />
             </svg>
           </button>
 
           <!-- User menu -->
           <div class="relative">
             <button
-              @click="toggleUserMenu"
               class="flex items-center space-x-3 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 p-2"
+              @click="toggleUserMenu"
             >
               <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <svg
+                  class="w-5 h-5 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
                 </svg>
               </div>
               <span class="hidden md:block text-gray-700 font-medium">{{ authStore.user?.full_name || $t('layout.user') }}</span>
-              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              <svg
+                class="w-4 h-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
             <!-- User dropdown -->
             <div
               v-if="showUserMenu"
-              @click.away="showUserMenu = false"
               class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50"
+              @click.away="showUserMenu = false"
             >
               <div class="px-4 py-2 border-b border-gray-100">
-                <p class="text-sm font-medium text-gray-900">{{ authStore.user?.full_name || $t('layout.user') }}</p>
-                <p class="text-xs text-gray-500">{{ authStore.user?.role || 'user' }}</p>
+                <p class="text-sm font-medium text-gray-900">
+                  {{ authStore.user?.full_name || $t('layout.user') }}
+                </p>
+                <p class="text-xs text-gray-500">
+                  {{ authStore.user?.role || 'user' }}
+                </p>
               </div>
               <router-link
                 to="/profile"
@@ -80,8 +146,8 @@
                 {{ $t('common.profileSettings') }}
               </router-link>
               <button
-                @click="handleLogout"
                 class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                @click="handleLogout"
               >
                 {{ $t('common.logout') }}
               </button>
@@ -102,7 +168,10 @@
       >
         <nav class="h-full overflow-y-auto">
           <div class="p-4 space-y-1">
-            <template v-for="item in navigationItems" :key="item.name">
+            <template
+              v-for="item in navigationItems"
+              :key="item.name"
+            >
               <router-link
                 v-if="hasPermission(item.roles)"
                 :to="item.to"
@@ -130,27 +199,56 @@
       <!-- Mobile sidebar overlay -->
       <div
         v-if="showMobileSidebar"
-        @click="closeMobileSidebar"
         class="fixed inset-0 bg-gray-600 bg-opacity-75 z-10 lg:hidden"
-      ></div>
+        @click="closeMobileSidebar"
+      />
 
       <!-- Main content -->
       <main class="flex-1 lg:ml-0">
         <!-- Breadcrumb -->
         <div class="bg-white border-b border-gray-200 px-4 lg:px-8 py-3">
-          <nav class="flex" aria-label="Breadcrumb">
+          <nav
+            class="flex"
+            aria-label="Breadcrumb"
+          >
             <ol class="flex items-center space-x-2">
               <li>
-                <router-link to="/dashboard" class="text-gray-500 hover:text-gray-700">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                <router-link
+                  to="/dashboard"
+                  class="text-gray-500 hover:text-gray-700"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
                   </svg>
                 </router-link>
               </li>
-              <li v-for="(crumb, index) in breadcrumbs" :key="index">
+              <li
+                v-for="(crumb, index) in breadcrumbs"
+                :key="index"
+              >
                 <div class="flex items-center">
-                  <svg class="w-4 h-4 text-gray-400 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  <svg
+                    class="w-4 h-4 text-gray-400 mx-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                   <router-link
                     v-if="crumb.to"
@@ -159,7 +257,10 @@
                   >
                     {{ crumb.name }}
                   </router-link>
-                  <span v-else class="text-sm font-medium text-gray-900">{{ crumb.name }}</span>
+                  <span
+                    v-else
+                    class="text-sm font-medium text-gray-900"
+                  >{{ crumb.name }}</span>
                 </div>
               </li>
             </ol>

@@ -83,6 +83,11 @@ const routes = [
     component: Reports,
     meta: {
       title: 'レポート',
+      requiresAuth: true,
+      layout: 'default'
+    }
+  },
+  {
     path: '/work-records',
     name: 'WorkRecords',
     component: WorkRecords,
