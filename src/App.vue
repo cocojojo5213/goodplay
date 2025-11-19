@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="min-h-screen bg-gray-50">
+  <div
+    id="app"
+    class="min-h-screen bg-gray-50"
+  >
     <!-- セッション期限切れ通知 -->
     <transition name="fade">
       <div
@@ -36,12 +39,12 @@
             r="10"
             stroke="currentColor"
             stroke-width="4"
-          ></circle>
+          />
           <path
             class="opacity-75"
             fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
+          />
         </svg>
         <span class="text-sm font-medium">
           {{ loadingStore.message || $t('common.loading') }}
@@ -49,12 +52,6 @@
       </div>
     </transition>
 
-  <div
-    id="app"
-    class="min-h-screen bg-gray-50"
-  >
-    <router-view />
-  <div id="app" class="min-h-screen bg-gray-50">
     <!-- Layout component based on route meta -->
     <component :is="layoutComponent">
       <router-view />
@@ -66,14 +63,11 @@
 </template>
 
 <script>
-import { ref, watch, onBeforeUnmount } from 'vue'
+import { ref, watch, onBeforeUnmount, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useLoadingStore } from '@/stores/loading'
 import { useAuthStore } from '@/stores/auth'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import DefaultLayout from '@/components/DefaultLayout.vue'
 import AuthLayout from '@/components/AuthLayout.vue'
 import MinimalLayout from '@/components/MinimalLayout.vue'
@@ -90,17 +84,16 @@ export default {
   setup() {
     const { locale, t } = useI18n()
     const router = useRouter()
+    const route = useRoute()
     const loadingStore = useLoadingStore()
     const authStore = useAuthStore()
+    
+    // 设置默认语言为日语
+    locale.value = 'ja'
     
     const showSessionOverlay = ref(false)
     const sessionMessage = ref('')
     let sessionTimer = null
-    const route = useRoute()
-    const { locale } = useI18n()
-    
-    // 设置默认语言为日语
-    locale.value = 'ja'
     
     // セッション期限切れを監視
     watch(() => authStore.sessionExpired, (expired) => {
@@ -140,10 +133,6 @@ export default {
       }
     })
     
-    return {
-      loadingStore,
-      showSessionOverlay,
-      sessionMessage
     // Layout component mapping
     const layoutMap = {
       'default': DefaultLayout,
@@ -157,6 +146,9 @@ export default {
     })
     
     return {
+      loadingStore,
+      showSessionOverlay,
+      sessionMessage,
       layoutComponent
     }
   }

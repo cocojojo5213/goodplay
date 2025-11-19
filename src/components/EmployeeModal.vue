@@ -1,9 +1,16 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="isOpen" class="fixed inset-0 z-50 overflow-y-auto" @click.self="handleBackdropClick">
+      <div
+        v-if="isOpen"
+        class="fixed inset-0 z-50 overflow-y-auto"
+        @click.self="handleBackdropClick"
+      >
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-          <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" @click="handleBackdropClick"></div>
+          <div
+            class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+            @click="handleBackdropClick"
+          />
           
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
           
@@ -13,14 +20,30 @@
                 <h3 class="text-lg font-medium text-gray-900">
                   {{ isEditMode ? $t('employees.editEmployee') : $t('employees.addEmployee') }}
                 </h3>
-                <button @click="close" class="text-gray-400 hover:text-gray-500">
-                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <button
+                  class="text-gray-400 hover:text-gray-500"
+                  @click="close"
+                >
+                  <svg
+                    class="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
               
-              <form @submit.prevent="handleSubmit" class="space-y-6">
+              <form
+                class="space-y-6"
+                @submit.prevent="handleSubmit"
+              >
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label class="block text-sm font-medium text-gray-700">
@@ -31,8 +54,11 @@
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       :class="{ 'border-red-500': validationErrors.employee_number }"
-                    />
-                    <p v-if="validationErrors.employee_number" class="mt-1 text-sm text-red-600">
+                    >
+                    <p
+                      v-if="validationErrors.employee_number"
+                      class="mt-1 text-sm text-red-600"
+                    >
                       {{ validationErrors.employee_number }}
                     </p>
                   </div>
@@ -46,8 +72,11 @@
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       :class="{ 'border-red-500': validationErrors.full_name }"
-                    />
-                    <p v-if="validationErrors.full_name" class="mt-1 text-sm text-red-600">
+                    >
+                    <p
+                      v-if="validationErrors.full_name"
+                      class="mt-1 text-sm text-red-600"
+                    >
                       {{ validationErrors.full_name }}
                     </p>
                   </div>
@@ -61,8 +90,11 @@
                       type="date"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       :class="{ 'border-red-500': validationErrors.date_of_birth }"
-                    />
-                    <p v-if="validationErrors.date_of_birth" class="mt-1 text-sm text-red-600">
+                    >
+                    <p
+                      v-if="validationErrors.date_of_birth"
+                      class="mt-1 text-sm text-red-600"
+                    >
                       {{ validationErrors.date_of_birth }}
                     </p>
                   </div>
@@ -75,10 +107,18 @@
                       v-model="formData.gender"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     >
-                      <option value="">選択してください</option>
-                      <option value="male">{{ $t('employees.male') }}</option>
-                      <option value="female">{{ $t('employees.female') }}</option>
-                      <option value="other">{{ $t('employees.other') }}</option>
+                      <option value="">
+                        選択してください
+                      </option>
+                      <option value="male">
+                        {{ $t('employees.male') }}
+                      </option>
+                      <option value="female">
+                        {{ $t('employees.female') }}
+                      </option>
+                      <option value="other">
+                        {{ $t('employees.other') }}
+                      </option>
                     </select>
                   </div>
                   
@@ -90,7 +130,7 @@
                       v-model="formData.nationality"
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div>
@@ -101,7 +141,7 @@
                       v-model="formData.passport_number"
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div>
@@ -113,8 +153,11 @@
                       type="email"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       :class="{ 'border-red-500': validationErrors.email }"
-                    />
-                    <p v-if="validationErrors.email" class="mt-1 text-sm text-red-600">
+                    >
+                    <p
+                      v-if="validationErrors.email"
+                      class="mt-1 text-sm text-red-600"
+                    >
                       {{ validationErrors.email }}
                     </p>
                   </div>
@@ -127,7 +170,7 @@
                       v-model="formData.phone"
                       type="tel"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div class="md:col-span-2">
@@ -138,7 +181,7 @@
                       v-model="formData.address"
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div>
@@ -149,7 +192,7 @@
                       v-model="formData.department"
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div>
@@ -160,7 +203,7 @@
                       v-model="formData.position"
                       type="text"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div>
@@ -171,7 +214,7 @@
                       v-model="formData.hire_date"
                       type="date"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
+                    >
                   </div>
                   
                   <div>
@@ -182,10 +225,18 @@
                       v-model="formData.status"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     >
-                      <option value="active">{{ $t('employees.active') }}</option>
-                      <option value="inactive">{{ $t('employees.inactive') }}</option>
-                      <option value="on_leave">{{ $t('employees.onLeave') }}</option>
-                      <option value="probation">{{ $t('employees.probation') }}</option>
+                      <option value="active">
+                        {{ $t('employees.active') }}
+                      </option>
+                      <option value="inactive">
+                        {{ $t('employees.inactive') }}
+                      </option>
+                      <option value="on_leave">
+                        {{ $t('employees.onLeave') }}
+                      </option>
+                      <option value="probation">
+                        {{ $t('employees.probation') }}
+                      </option>
                     </select>
                   </div>
                   
@@ -197,14 +248,19 @@
                       v-model="formData.notes"
                       rows="3"
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    ></textarea>
+                    />
                   </div>
                 </div>
                 
-                <div v-if="submitError" class="rounded-md bg-red-50 p-4">
+                <div
+                  v-if="submitError"
+                  class="rounded-md bg-red-50 p-4"
+                >
                   <div class="flex">
                     <div class="ml-3">
-                      <h3 class="text-sm font-medium text-red-800">{{ submitError }}</h3>
+                      <h3 class="text-sm font-medium text-red-800">
+                        {{ submitError }}
+                      </h3>
                     </div>
                   </div>
                 </div>
@@ -212,9 +268,9 @@
                 <div class="flex justify-end space-x-3 pt-4 border-t">
                   <button
                     type="button"
-                    @click="close"
                     class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
                     :disabled="submitting"
+                    @click="close"
                   >
                     {{ $t('common.cancel') }}
                   </button>

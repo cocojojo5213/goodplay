@@ -486,112 +486,126 @@
               {{ $t('common.next') }}
             </button>
         
-        <div class="bg-white shadow rounded-lg p-6">
-          <div class="text-center text-gray-500">
-            <svg
-              class="mx-auto h-12 w-12 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            <div class="bg-white shadow rounded-lg p-6">
+              <div class="text-center text-gray-500">
+                <svg
+                  class="mx-auto h-12 w-12 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                <h3 class="mt-4 text-lg font-medium text-gray-900">
+                  書類管理
+                </h3>
+                <p class="mt-2 text-sm text-gray-500">
+                  この機能は現在開発中です
+                </p>
+              </div>
+            </div>
+            <div>
+              <div class="mb-6">
+                <h1 class="text-2xl font-semibold text-gray-900">
+                  {{ $t('documents.title') }}
+                </h1>
+                <p class="mt-2 text-gray-600">
+                  書類を管理します
+                </p>
+              </div>
+    
+              <div class="bg-white shadow rounded-lg p-6">
+                <div class="text-center text-gray-500">
+                  <svg
+                    class="mx-auto h-12 w-12 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <h3 class="mt-4 text-lg font-medium text-gray-900">
+                    書類管理
+                  </h3>
+                  <p class="mt-2 text-sm text-gray-500">
+                    この機能は現在開発中です
+                  </p>
+                </div>
+
+                <!-- ローディング状態 -->
+                <div class="bg-white rounded-lg shadow p-12 text-center" style="display: none;">
+                  <svg
+                    class="animate-spin h-12 w-12 text-blue-600 mx-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    />
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <p class="mt-4 text-gray-600">
+                    {{ $t('common.loading') }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- アップロード モーダル -->
+              <UploadModal
+                v-if="openUploadModal"
+                @close="openUploadModal = false"
+                @uploaded="handleUploadSuccess"
               />
-            </svg>
-            <h3 class="mt-4 text-lg font-medium text-gray-900">
-              書類管理
-            </h3>
-            <p class="mt-2 text-sm text-gray-500">
-              この機能は現在開発中です
-            </p>
+
+              <!-- 詳細 モーダル -->
+              <DetailModal
+                v-if="openDetailModalFlag && selectedDocumentId"
+                :document-id="selectedDocumentId"
+                @close="openDetailModalFlag = false"
+                @edit="handleOpenEdit"
+                @delete="handleDetailDelete"
+                @download="handleDownload"
+              />
+
+              <!-- 編集 モーダル -->
+              <EditModal
+                v-if="openEditModalFlag && editingDocument"
+                :document="editingDocument"
+                @close="openEditModalFlag = false"
+                @updated="handleEditSuccess"
+              />
+
+              <!-- 削除確認 モーダル -->
+              <DeleteConfirmModal
+                v-if="showDeleteConfirm && documentToDelete"
+                :document="documentToDelete"
+                @confirm="handleConfirmDelete"
+                @cancel="showDeleteConfirm = false"
+              />
+            </div>
           </div>
         </div>
-  <div>
-    <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-900">
-        {{ $t('documents.title') }}
-      </h1>
-      <p class="mt-2 text-gray-600">
-        書類を管理します
-      </p>
-    </div>
-    
-    <div class="bg-white shadow rounded-lg p-6">
-      <div class="text-center text-gray-500">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        <h3 class="mt-4 text-lg font-medium text-gray-900">書類管理</h3>
-        <p class="mt-2 text-sm text-gray-500">
-          この機能は現在開発中です
-        </p>
-      </div>
-
-      <!-- ローディング状態 -->
-      <div
-        v-else
-        class="bg-white rounded-lg shadow p-12 text-center"
-      >
-        <svg
-          class="animate-spin h-12 w-12 text-blue-600 mx-auto"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            class="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="4"
-          />
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          />
-        </svg>
-        <p class="mt-4 text-gray-600">
-          {{ $t('common.loading') }}
-        </p>
       </div>
     </div>
-
-    <!-- アップロード モーダル -->
-    <UploadModal
-      v-if="openUploadModal"
-      @close="openUploadModal = false"
-      @uploaded="handleUploadSuccess"
-    />
-
-    <!-- 詳細 モーダル -->
-    <DetailModal
-      v-if="openDetailModalFlag && selectedDocumentId"
-      :document-id="selectedDocumentId"
-      @close="openDetailModalFlag = false"
-      @edit="handleOpenEdit"
-      @delete="handleDetailDelete"
-      @download="handleDownload"
-    />
-
-    <!-- 編集 モーダル -->
-    <EditModal
-      v-if="openEditModalFlag && editingDocument"
-      :document="editingDocument"
-      @close="openEditModalFlag = false"
-      @updated="handleEditSuccess"
-    />
-
-    <!-- 削除確認 モーダル -->
-    <DeleteConfirmModal
-      v-if="showDeleteConfirm && documentToDelete"
-      :document="documentToDelete"
-      @confirm="handleConfirmDelete"
-      @cancel="showDeleteConfirm = false"
-    />
   </div>
 </template>
 

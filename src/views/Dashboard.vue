@@ -1,49 +1,10 @@
 <template>
   <div>
-    <!-- 統計カード -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <h1 class="text-xl font-semibold text-gray-900">
-              {{ $t('dashboard.title') }}
-            </h1>
-          </div>
-          <div class="flex items-center space-x-4">
-            <span class="text-sm text-gray-700">
-              {{ $t('dashboard.welcome') }}, {{ authStore.user?.full_name }}
-            </span>
-            <button
-              class="text-sm text-gray-500 hover:text-gray-700"
-              @click="handleLogout"
-            >
-              {{ $t('auth.logout') }}
-            </button>
-            <div class="flex-shrink-0">
-              <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">
-                  {{ $t('dashboard.totalEmployees') }}
-                </dt>
-                <dd class="text-lg font-medium text-gray-900">
-                  {{ stats.totalEmployees }}
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <!-- 统计卡片 -->
+      <!-- 統計カード -->
       <div class="px-4 py-6 sm:px-0">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- 従業員総数 -->
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
@@ -78,6 +39,7 @@
             </div>
           </div>
 
+          <!-- アクティブな従業員 -->
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
@@ -109,30 +71,10 @@
                   </dl>
                 </div>
               </div>
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">
-                  {{ $t('dashboard.activeEmployees') }}
-                </dt>
-                <dd class="text-lg font-medium text-gray-900">
-                  {{ stats.activeEmployees }}
-                </dd>
-              </dl>
             </div>
           </div>
-        </div>
-      </div>
 
+          <!-- ビザ期限が近い -->
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
@@ -163,30 +105,11 @@
                     </dd>
                   </dl>
                 </div>
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div class="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
               </div>
             </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">
-                  {{ $t('dashboard.expiringVisas') }}
-                </dt>
-                <dd class="text-lg font-medium text-gray-900">
-                  {{ stats.expiringVisas }}
-                </dd>
-              </dl>
-            </div>
           </div>
-        </div>
-      </div>
 
+          <!-- 保留中の書類 -->
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="p-5">
               <div class="flex items-center">
@@ -217,272 +140,188 @@
                     </dd>
                   </dl>
                 </div>
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div class="w-8 h-8 bg-red-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 快速操作 -->
+      <div class="mt-8">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">
+          {{ $t('dashboard.quickActions') }}
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <router-link
+            to="/employees"
+            class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg
+                  class="h-8 w-8 text-blue-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                  />
                 </svg>
               </div>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">
-                  {{ $t('dashboard.pendingDocuments') }}
-                </dt>
-                <dd class="text-lg font-medium text-gray-900">
-                  {{ stats.pendingDocuments }}
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-        <!-- 快速操作 -->
-        <div class="mt-8">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">
-            {{ $t('dashboard.quickActions') }}
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <router-link
-              to="/employees"
-              class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-            >
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="h-8 w-8 text-blue-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                    />
-                  </svg>
-                </div>
-                <div class="ml-4">
-                  <h4 class="text-base font-medium text-gray-900">
-                    {{ $t('employees.addEmployee') }}
-                  </h4>
-                  <p class="mt-1 text-sm text-gray-500">
-                    {{ $t('dashboard.registerNewEmployee') }}
-                  </p>
-                </div>
+              <div class="ml-4">
+                <h4 class="text-base font-medium text-gray-900">
+                  {{ $t('employees.addEmployee') }}
+                </h4>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ $t('dashboard.registerNewEmployee') }}
+                </p>
               </div>
-            </router-link>
+            </div>
+          </router-link>
 
-            <router-link
-              to="/documents"
-              class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-            >
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="h-8 w-8 text-green-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                </div>
-                <div class="ml-4">
-                  <h4 class="text-base font-medium text-gray-900">
-                    {{ $t('documents.uploadDocument') }}
-                  </h4>
-                  <p class="mt-1 text-sm text-gray-500">
-                    {{ $t('dashboard.uploadDocuments') }}
-                  </p>
-                </div>
-              </div>
-            </router-link>
-    <!-- 快速操作 -->
-    <div class="mt-8">
-      <h3 class="text-lg font-medium text-gray-900 mb-4">
-        {{ $t('dashboard.quickActions') }}
-      </h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <router-link
-          to="/employees"
-          class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-        >
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-              </svg>
-            </div>
-            <div class="ml-4">
-              <h4 class="text-base font-medium text-gray-900">
-                {{ $t('employees.addEmployee') }}
-              </h4>
-              <p class="mt-1 text-sm text-gray-500">
-                {{ $t('dashboard.registerNewEmployee') }}
-              </p>
-            </div>
-          </div>
-        </router-link>
-
-        <router-link
-          to="/documents"
-          class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-        >
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-8 w-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-            </div>
-            <div class="ml-4">
-              <h4 class="text-base font-medium text-gray-900">
-                {{ $t('documents.uploadDocument') }}
-              </h4>
-              <p class="mt-1 text-sm text-gray-500">
-                {{ $t('dashboard.uploadDocuments') }}
-              </p>
-            </div>
-          </div>
-        </router-link>
-
-            <router-link
-              to="/work-records"
-              class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-            >
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="h-8 w-8 text-purple-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01M12 16h.01"
-                    />
-                  <svg class="h-8 w-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div class="ml-4">
-                  <h4 class="text-base font-medium text-gray-900">
-                    {{ $t('workRecords.title') }}
-                  </h4>
-                  <p class="mt-1 text-sm text-gray-500">
-                    {{ $t('dashboard.manageWorkRecords') }}
-                  </p>
-                </div>
-              </div>
-            </router-link>
-        <router-link
-          to="/reports"
-          class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-        >
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-8 w-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01M12 16h.01" />
-              </svg>
-            </div>
-            <div class="ml-4">
-              <h4 class="text-base font-medium text-gray-900">
-                {{ $t('reports.title') }}
-              </h4>
-              <p class="mt-1 text-sm text-gray-500">
-                {{ $t('dashboard.generateReports') }}
-              </p>
-            </div>
-          </div>
-        </router-link>
-      </div>
-    </div>
-
-        <!-- 最近活动 -->
-        <div class="mt-8">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">
-            {{ $t('dashboard.recentActivities') }}
-          </h3>
-          <div class="bg-white shadow rounded-lg">
-            <div class="p-6">
-              <div
-                v-if="recentActivities.length === 0"
-                class="text-center text-gray-500 py-8"
-              >
-                {{ $t('messages.noData') }}
-              </div>
-              <div
-                v-else
-                class="space-y-4"
-              >
-                <div
-                  v-for="activity in recentActivities"
-                  :key="activity.id"
-                  class="flex items-start space-x-3"
-                >
-                  <div class="flex-shrink-0">
-                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-2" />
-                  </div>
-                  <div class="flex-1">
-                    <p class="text-sm text-gray-900">
-                      {{ activity.description }}
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1">
-                      {{ formatDate(activity.created_at) }}
-                    </p>
-                  </div>
-                </div>
-    <!-- 最近活動 -->
-    <div class="mt-8">
-      <h3 class="text-lg font-medium text-gray-900 mb-4">
-        {{ $t('dashboard.recentActivities') }}
-      </h3>
-      <div class="bg-white shadow rounded-lg">
-        <div class="p-6">
-          <div v-if="recentActivities.length === 0" class="text-center text-gray-500 py-8">
-            {{ $t('messages.noData') }}
-          </div>
-          <div v-else class="space-y-4">
-            <div
-              v-for="activity in recentActivities"
-              :key="activity.id"
-              class="flex items-start space-x-3"
-            >
+          <router-link
+            to="/documents"
+            class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="flex items-center">
               <div class="flex-shrink-0">
-                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                <svg
+                  class="h-8 w-8 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
               </div>
-              <div class="flex-1">
-                <p class="text-sm text-gray-900">
-                  {{ activity.description }}
+              <div class="ml-4">
+                <h4 class="text-base font-medium text-gray-900">
+                  {{ $t('documents.uploadDocument') }}
+                </h4>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ $t('dashboard.uploadDocuments') }}
                 </p>
-                <p class="text-xs text-gray-500 mt-1">
-                  {{ formatDate(activity.created_at) }}
+              </div>
+            </div>
+          </router-link>
+
+          <router-link
+            to="/work-records"
+            class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg
+                  class="h-8 w-8 text-purple-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-base font-medium text-gray-900">
+                  {{ $t('workRecords.title') }}
+                </h4>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ $t('dashboard.manageWorkRecords') }}
                 </p>
+              </div>
+            </div>
+          </router-link>
+          <router-link
+            to="/reports"
+            class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg
+                  class="h-8 w-8 text-purple-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01M12 16h.01"
+                  />
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-base font-medium text-gray-900">
+                  {{ $t('reports.title') }}
+                </h4>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ $t('dashboard.generateReports') }}
+                </p>
+              </div>
+            </div>
+          </router-link>
+        </div>
+      </div>
+
+      <!-- 最近活動 -->
+      <div class="mt-8">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">
+          {{ $t('dashboard.recentActivities') }}
+        </h3>
+        <div class="bg-white shadow rounded-lg">
+          <div class="p-6">
+            <div
+              v-if="recentActivities.length === 0"
+              class="text-center text-gray-500 py-8"
+            >
+              {{ $t('messages.noData') }}
+            </div>
+            <div
+              v-else
+              class="space-y-4"
+            >
+              <div
+                v-for="activity in recentActivities"
+                :key="activity.id"
+                class="flex items-start space-x-3"
+              >
+                <div class="flex-shrink-0">
+                  <div class="w-2 h-2 bg-blue-500 rounded-full mt-2" />
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm text-gray-900">
+                    {{ activity.description }}
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    {{ formatDate(activity.created_at) }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 
 export default {

@@ -12,33 +12,16 @@ export const useEmployeesStore = defineStore('employees', () => {
   const employees = ref([])
   const currentEmployee = ref(null)
   const loading = ref(false)
-  const detailLoading = ref(false)
   const error = ref(null)
-  const detailError = ref(null)
   
-  // ページネーション
-import { useAuthStore } from './auth'
-
-export const useEmployeesStore = defineStore('employees', () => {
-  const authStore = useAuthStore()
-  
-  const employees = ref([])
-  const currentEmployee = ref(null)
-  const loading = ref(false)
-  const error = ref(null)
   const pagination = ref({
     page: 1,
     limit: 20,
     total: 0,
-    pages: 0
+    totalPages: 0
   })
   
   // フィルター
-  const filters = ref({
-    search: '',
-    status: 'active',
-    totalPages: 0
-  })
   const filters = ref({
     search: '',
     status: '',
