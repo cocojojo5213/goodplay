@@ -13,6 +13,7 @@ class ReportController extends BaseController {
     private $reportService;
     
     public function __construct() {
+        parent::__construct();
         $this->reportService = new ReportService();
     }
     

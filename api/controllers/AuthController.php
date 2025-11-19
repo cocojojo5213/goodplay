@@ -1,57 +1,75 @@
 <?php
 /**
- * 认证控制器
+ * 認証コントローラ
  * 
- * 处理用户登录、登出、身份验证等功能
+ * ユーザーログイン・ログアウト・認証等の機能を処理する
  */
+
+require_once __DIR__ . '/../helpers/AuthHelper.php';
+require_once __DIR__ . '/../helpers/ResponseHelper.php';
+require_once __DIR__ . '/../helpers/FileLogger.php';
+require_once __DIR__ . '/../services/LoggingService.php';
 
 class AuthController {
     
+    /** @var LoggingService ロギングサービス */
+    private $loggingService;
+    
     /**
-     * 用户登录
+     * コンストラクタ
+     */
+    public function __construct() {
+        $this->loggingService = new LoggingService();
+    }
+    
+    /**
+     * ユーザーログイン
      */
     public function login() {
-        $f3 = F3();
-        $db = $f3->get('DB');
-        
-        // 获取请求数据
-        $input = json_decode(file_get_contents('php://input'), true);
-        
-        if (!$input) {
-            header('HTTP/1.1 400 Bad Request');
-            echo json_encode(['error' => '无效的请求数据']);
-            return;
-        }
-        
-        $username = $input['username'] ?? '';
-        $password = $input['password'] ?? '';
-        
-        if (empty($username) || empty($password)) {
-            header('HTTP/1.1 400 Bad Request');
-            echo json_encode(['error' => '用户名和密码不能为空']);
-            return;
-        }
-        
         try {
-            // 查询用户
+            $f3 = F3();
+            $db = $f3->get('DB');
+            
+            // リクエストデータ取得
+            $input = json_decode(file_get_contents('php://input'), true);
+            
+            if (!$input) {
+                ResponseHelper::error('無効なリクエストデータです', 400);
+                return;
+            }
+            
+            $username = trim($input['username'] ?? '');
+            $password = $input['password'] ?? '';
+            
+            // バリデーション
+            if (empty($username) || empty($password)) {
+                ResponseHelper::validationError([
+                    'username' => empty($username) ? 'ユーザー名は必須です' : null,
+                    'password' => empty($password) ? 'パスワードは必須です' : null
+                ], 'ユーザー名とパスワードを入力してください');
+                return;
+            }
+            
+            // ユーザー照会
             $stmt = $db->prepare("SELECT * FROM users WHERE username = ? AND is_active = 1");
             $stmt->execute([$username]);
             $user = $stmt->fetch();
             
             if (!$user || !password_verify($password, $user['password_hash'])) {
-                header('HTTP/1.1 401 Unauthorized');
-                echo json_encode(['error' => '用户名或密码错误']);
+                // ログイン失敗をログに記録
+                FileLogger::info('ログイン失敗', ['username' => $username]);
+                ResponseHelper::unauthorized('ユーザー名またはパスワードが正しくありません');
                 return;
             }
             
-            // 生成会话令牌
+            // セッショントークン生成
             $sessionId = bin2hex(random_bytes(32));
             $userId = $user['id'];
             $ipAddress = $_SERVER['REMOTE_ADDR'] ?? '';
             $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
             $lastActivity = time();
             
-            // 保存会话
+            // セッション保存
             $payload = json_encode([
                 'user_id' => $userId,
                 'username' => $user['username'],
@@ -64,12 +82,14 @@ class AuthController {
             ");
             $stmt->execute([$sessionId, $userId, $ipAddress, $userAgent, $payload, $lastActivity]);
             
-            // 记录登录日志
-            $this->logActivity($userId, 'login', 'users', $userId, null, null);
+            // ログイン成功をログに記録
+            $this->loggingService->logLogin($userId, [
+                'username' => $user['username'],
+                'role' => $user['role']
+            ]);
             
-            // 返回成功响应
-            echo json_encode([
-                'success' => true,
+            // 成功レスポンス
+            ResponseHelper::success([
                 'token' => $sessionId,
                 'user' => [
                     'id' => $user['id'],
@@ -81,166 +101,88 @@ class AuthController {
             ]);
             
         } catch (PDOException $e) {
-            header('HTTP/1.1 500 Internal Server Error');
-            echo json_encode(['error' => '登录失败: ' . $e->getMessage()]);
+            FileLogger::error('ログイン処理エラー', [
+                'error' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]);
+            ResponseHelper::serverError('ログイン処理中にエラーが発生しました', $e);
+        } catch (Exception $e) {
+            ResponseHelper::serverError('ログイン処理に失敗しました', $e);
         }
     }
     
     /**
-     * 用户登出
+     * ユーザーログアウト
      */
     public function logout() {
-        $f3 = F3();
-        $db = $f3->get('DB');
-        
-        // 获取认证令牌
-        $token = $this->getAuthToken();
-        
-        if ($token) {
-            try {
-                // 删除会话
+        try {
+            $f3 = F3();
+            $db = $f3->get('DB');
+            
+            // 認証トークン取得
+            $token = AuthHelper::getAuthToken();
+            $userId = null;
+            
+            if ($token) {
+                // セッション情報を取得してユーザーIDを記録
+                $stmt = $db->prepare("SELECT payload FROM sessions WHERE id = ?");
+                $stmt->execute([$token]);
+                $session = $stmt->fetch();
+                
+                if ($session) {
+                    $sessionData = json_decode($session['payload'], true);
+                    $userId = $sessionData['user_id'] ?? null;
+                }
+                
+                // セッション削除
                 $stmt = $db->prepare("DELETE FROM sessions WHERE id = ?");
                 $stmt->execute([$token]);
                 
-                // 记录登出日志
-                $this->logActivity(null, 'logout', 'users', null, null, null);
-                
-            } catch (PDOException $e) {
-                // 记录错误但不影响登出
-                error_log('登出时删除会话失败: ' . $e->getMessage());
+                // ログアウトログを記録
+                $this->loggingService->logLogout($userId);
             }
+            
+            ResponseHelper::success(['message' => 'ログアウトしました']);
+            
+        } catch (PDOException $e) {
+            FileLogger::error('ログアウト処理エラー', [
+                'error' => $e->getMessage()
+            ]);
+            // ログアウトは失敗してもエラーを返さない
+            ResponseHelper::success(['message' => 'ログアウトしました']);
         }
-        
-        echo json_encode(['success' => true, 'message' => '已成功登出']);
     }
     
     /**
-     * 获取当前用户信息
+     * 現在のユーザー情報取得
      */
     public function me() {
-        $f3 = F3();
-        $db = $f3->get('DB');
-        
-        // 验证身份
-        $user = $this->authenticate();
-        
-        if (!$user) {
-            header('HTTP/1.1 401 Unauthorized');
-            echo json_encode(['error' => '未授权访问']);
-            return;
-        }
-        
         try {
-            // 获取完整用户信息
+            // 認証確認
+            $user = AuthHelper::requireAuth();
+            if (!$user) {
+                return;
+            }
+            
+            $f3 = F3();
+            $db = $f3->get('DB');
+            
+            // 完全なユーザー情報取得
             $stmt = $db->prepare("SELECT id, username, email, full_name, role, created_at FROM users WHERE id = ?");
             $stmt->execute([$user['user_id']]);
             $userInfo = $stmt->fetch();
             
-            if ($userInfo) {
-                echo json_encode([
-                    'success' => true,
-                    'user' => $userInfo
-                ]);
-            } else {
-                header('HTTP/1.1 404 Not Found');
-                echo json_encode(['error' => '用户不存在']);
+            if (!$userInfo) {
+                ResponseHelper::notFound('ユーザーが見つかりません');
+                return;
             }
             
-        } catch (PDOException $e) {
-            header('HTTP/1.1 500 Internal Server Error');
-            echo json_encode(['error' => '获取用户信息失败: ' . $e->getMessage()]);
-        }
-    }
-    
-    /**
-     * 身份验证
-     */
-    private function authenticate() {
-        $f3 = F3();
-        $db = $f3->get('DB');
-        
-        $token = $this->getAuthToken();
-        
-        if (!$token) {
-            return null;
-        }
-        
-        try {
-            // 检查会话
-            $stmt = $db->prepare("
-                SELECT s.payload, s.last_activity, u.is_active 
-                FROM sessions s 
-                JOIN users u ON s.user_id = u.id 
-                WHERE s.id = ? AND u.is_active = 1
-            ");
-            $stmt->execute([$token]);
-            $session = $stmt->fetch();
-            
-            if (!$session) {
-                return null;
-            }
-            
-            // 检查会话是否过期
-            $timeout = $f3->get('SESSION_TIMEOUT');
-            if (time() - $session['last_activity'] > $timeout) {
-                // 删除过期会话
-                $stmt = $db->prepare("DELETE FROM sessions WHERE id = ?");
-                $stmt->execute([$token]);
-                return null;
-            }
-            
-            // 更新最后活动时间
-            $stmt = $db->prepare("UPDATE sessions SET last_activity = ? WHERE id = ?");
-            $stmt->execute([time(), $token]);
-            
-            return json_decode($session['payload'], true);
+            ResponseHelper::success(['user' => $userInfo]);
             
         } catch (PDOException $e) {
-            error_log('身份验证失败: ' . $e->getMessage());
-            return null;
-        }
-    }
-    
-    /**
-     * 获取认证令牌
-     */
-    private function getAuthToken() {
-        // 从 Authorization 头获取
-        $headers = getallheaders();
-        $authHeader = $headers['Authorization'] ?? '';
-        
-        if (preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
-            return $matches[1];
-        }
-        
-        // 从查询参数获取（用于测试）
-        return $_GET['token'] ?? '';
-    }
-    
-    /**
-     * 记录活动日志
-     */
-    private function logActivity($userId, $action, $tableName = null, $recordId = null, $oldValues = null, $newValues = null) {
-        $f3 = F3();
-        $db = $f3->get('DB');
-        
-        try {
-            $stmt = $db->prepare("
-                INSERT INTO system_logs (user_id, action, table_name, record_id, old_values, new_values, ip_address, user_agent) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ");
-            $stmt->execute([
-                $userId,
-                $action,
-                $tableName,
-                $recordId,
-                $oldValues ? json_encode($oldValues) : null,
-                $newValues ? json_encode($newValues) : null,
-                $_SERVER['REMOTE_ADDR'] ?? '',
-                $_SERVER['HTTP_USER_AGENT'] ?? ''
-            ]);
-        } catch (PDOException $e) {
-            error_log('记录日志失败: ' . $e->getMessage());
+            ResponseHelper::serverError('ユーザー情報の取得に失敗しました', $e);
+        } catch (Exception $e) {
+            ResponseHelper::serverError('ユーザー情報の取得に失敗しました', $e);
         }
     }
 }
