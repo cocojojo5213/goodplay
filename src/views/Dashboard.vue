@@ -147,6 +147,26 @@
           </div>
         </router-link>
 
+            <router-link
+              to="/work-records"
+              class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
+            >
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <svg class="h-8 w-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-base font-medium text-gray-900">
+                    {{ $t('workRecords.title') }}
+                  </h4>
+                  <p class="mt-1 text-sm text-gray-500">
+                    勤怠記録を管理する
+                  </p>
+                </div>
+              </div>
+            </router-link>
         <router-link
           to="/reports"
           class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
