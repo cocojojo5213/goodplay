@@ -21,7 +21,7 @@
           {{ $t('auth.login') }}
         </h2>
         <p class="mt-2 text-center text-sm text-gray-600">
-          特定技能職員管理システム
+          {{ $t('layout.applicationTitle') }}
         </p>
       </div>
       
@@ -236,7 +236,7 @@
       </form>
       
       <div class="text-center text-sm text-gray-500">
-        <p>&copy; 2024 特定技能職員管理システム</p>
+        <p>&copy; 2024 {{ $t('layout.applicationTitle') }}</p>
       <div>
         <button
           type="submit"

@@ -70,13 +70,13 @@
                   {{ $t('common.all') }}
                 </option>
                 <option value="production">
-                  生産
+                  {{ $t('reports.production') }}
                 </option>
                 <option value="administration">
-                  管理
+                  {{ $t('reports.administration') }}
                 </option>
                 <option value="sales">
-                  営業
+                  {{ $t('reports.sales') }}
                 </option>
               </select>
             </div>
@@ -94,19 +94,19 @@
                   {{ $t('common.all') }}
                 </option>
                 <option value="Japan">
-                  日本
+                  {{ $t('reports.japan') }}
                 </option>
                 <option value="Vietnam">
-                  ベトナム
+                  {{ $t('reports.vietnam') }}
                 </option>
                 <option value="Philippines">
-                  フィリピン
+                  {{ $t('reports.philippines') }}
                 </option>
                 <option value="Indonesia">
-                  インドネシア
+                  {{ $t('reports.indonesia') }}
                 </option>
                 <option value="Thailand">
-                  タイ
+                  {{ $t('reports.thailand') }}
                 </option>
               </select>
             </div>
