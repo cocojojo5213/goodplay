@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="ml-3">
-              <h1 class="text-xl font-semibold text-gray-900">特定技能職員管理システム</h1>
+              <h1 class="text-xl font-semibold text-gray-900">{{ $t('layout.applicationTitle') }}</h1>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <span class="hidden md:block text-gray-700 font-medium">{{ authStore.user?.full_name || 'ユーザー' }}</span>
+              <span class="hidden md:block text-gray-700 font-medium">{{ authStore.user?.full_name || $t('layout.user') }}</span>
               <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -70,20 +70,20 @@
               class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50"
             >
               <div class="px-4 py-2 border-b border-gray-100">
-                <p class="text-sm font-medium text-gray-900">{{ authStore.user?.full_name || 'ユーザー' }}</p>
+                <p class="text-sm font-medium text-gray-900">{{ authStore.user?.full_name || $t('layout.user') }}</p>
                 <p class="text-xs text-gray-500">{{ authStore.user?.role || 'user' }}</p>
               </div>
               <router-link
                 to="/profile"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                プロフィール設定
+                {{ $t('common.profileSettings') }}
               </router-link>
               <button
                 @click="handleLogout"
                 class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                ログアウト
+                {{ $t('common.logout') }}
               </button>
             </div>
           </div>
@@ -192,6 +192,7 @@
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 
 export default {
@@ -200,6 +201,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const authStore = useAuthStore()
+    const { t } = useI18n()
 
     const showMobileSidebar = ref(false)
     const showUserMenu = ref(false)
@@ -207,37 +209,37 @@ export default {
     // Navigation items with role-based access
     const navigationItems = [
       {
-        name: 'ダッシュボード',
+        name: t('navigation.dashboard'),
         to: '/dashboard',
         icon: 'HomeIcon',
         roles: ['admin', 'manager', 'user']
       },
       {
-        name: '従業員管理',
+        name: t('navigation.employees'),
         to: '/employees',
         icon: 'UsersIcon',
         roles: ['admin', 'manager']
       },
       {
-        name: '書類管理',
+        name: t('navigation.documents'),
         to: '/documents',
         icon: 'DocumentIcon',
         roles: ['admin', 'manager', 'user']
       },
       {
-        name: '勤怠記録',
+        name: t('navigation.workRecords'),
         to: '/work-records',
         icon: 'ClockIcon',
         roles: ['admin', 'manager', 'user']
       },
       {
-        name: 'レポート',
+        name: t('navigation.reports'),
         to: '/reports',
         icon: 'ChartIcon',
         roles: ['admin', 'manager']
       },
       {
-        name: '設定',
+        name: t('navigation.settings'),
         to: '/settings',
         icon: 'CogIcon',
         roles: ['admin', 'manager']

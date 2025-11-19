@@ -34,6 +34,7 @@
     "login": "ログイン",
     "register": "登録",
     "profile": "プロフィール",
+    "profileSettings": "プロフィール設定",
     "dashboard": "ダッシュボード",
     "home": "ホーム",
     "help": "ヘルプ",
@@ -95,7 +96,15 @@
     "september": "9月",
     "october": "10月",
     "november": "11月",
-    "december": "12月"
+    "december": "12月",
+    "noData": "データがありません"
+  },
+  "layout": {
+    "applicationTitle": "特定技能職員管理システム",
+    "user": "ユーザー",
+    "notifications": "通知",
+    "language": "言語",
+    "quickAccessPages": "よくアクセスするページ"
   },
   "auth": {
     "login": "ログイン",
@@ -110,6 +119,7 @@
     "logoutSuccess": "ログアウトしました",
     "invalidCredentials": "ユーザー名またはパスワードが正しくありません",
     "sessionExpired": "セッションが期限切れです。再度ログインしてください。",
+    "sessionExpiredNotification": "セッション期限切れ通知",
     "accessDenied": "アクセスが拒否されました",
     "insufficientPermissions": "権限が不足しています",
     "accountDisabled": "アカウントが無効になっています",
@@ -153,7 +163,11 @@
     "charts": "グラフ",
     "overview": "概要",
     "performance": "パフォーマンス",
-    "trends": "トレンド"
+    "trends": "トレンド",
+    "registerNewEmployee": "新しい従業員を登録する",
+    "uploadDocuments": "書類をアップロードする",
+    "manageWorkRecords": "勤怠記録を管理する",
+    "generateReports": "レポートを生成する"
   },
   "reports": {
     "title": "レポート",
@@ -210,7 +224,15 @@
     "workHoursChart": "勤務時間",
     "overtimeChart": "残業時間",
     "chartTitle": "チャート",
-    "reportGenerated": "レポート生成時刻"
+    "reportGenerated": "レポート生成時刻",
+    "production": "生産",
+    "administration": "管理",
+    "sales": "営業",
+    "japan": "日本",
+    "vietnam": "ベトナム",
+    "philippines": "フィリピン",
+    "indonesia": "インドネシア",
+    "thailand": "タイ"
   },
   "employees": {
     "title": "従業員管理",
@@ -270,7 +292,11 @@
     "medical": "健康情報",
     "bankAccount": "銀行口座",
     "taxInfo": "税務情報",
-    "insurance": "保険情報"
+    "insurance": "保険情報",
+    "totalEmployees": "総従業員数",
+    "totalActive": "在籍中",
+    "totalExpiring": "ビザ期限間近",
+    "totalNewThisMonth": "今月の新規採用"
   },
   "documents": {
     "title": "書類管理",
@@ -332,7 +358,8 @@
     "version": "バージョン",
     "history": "履歴",
     "permissions": "権限",
-    "accessLog": "アクセスログ"
+    "accessLog": "アクセスログ",
+    "deleteWarning": "この操作は取り消せません。関連するファイルも削除されます。"
   },
   "workRecords": {
     "title": "勤怠記録",
@@ -412,6 +439,13 @@
     "days": "日",
     "hoursShort": "h",
     "minutesShort": "m"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "message": "お探しのページは存在しないか、移動された可能性があります。",
+    "checkUrl": "URLを確認していただくか、以下のリンクから目的のページへ移動してください。",
+    "goToDashboard": "ダッシュボードへ",
+    "goBack": "前のページへ"
   },
   "errors": {
     "404": {

@@ -273,7 +273,7 @@
                     {{ $t('employees.addEmployee') }}
                   </h4>
                   <p class="mt-1 text-sm text-gray-500">
-                    新しい従業員を登録する
+                    {{ $t('dashboard.registerNewEmployee') }}
                   </p>
                 </div>
               </div>
@@ -304,7 +304,7 @@
                     {{ $t('documents.uploadDocument') }}
                   </h4>
                   <p class="mt-1 text-sm text-gray-500">
-                    書類をアップロードする
+                    {{ $t('dashboard.uploadDocuments') }}
                   </p>
                 </div>
               </div>
@@ -330,7 +330,7 @@
                 {{ $t('employees.addEmployee') }}
               </h4>
               <p class="mt-1 text-sm text-gray-500">
-                新しい従業員を登録する
+                {{ $t('dashboard.registerNewEmployee') }}
               </p>
             </div>
           </div>
@@ -351,7 +351,7 @@
                 {{ $t('documents.uploadDocument') }}
               </h4>
               <p class="mt-1 text-sm text-gray-500">
-                書類をアップロードする
+                {{ $t('dashboard.uploadDocuments') }}
               </p>
             </div>
           </div>
@@ -384,7 +384,7 @@
                     {{ $t('workRecords.title') }}
                   </h4>
                   <p class="mt-1 text-sm text-gray-500">
-                    勤怠記録を管理する
+                    {{ $t('dashboard.manageWorkRecords') }}
                   </p>
                 </div>
               </div>
@@ -404,7 +404,7 @@
                 {{ $t('reports.title') }}
               </h4>
               <p class="mt-1 text-sm text-gray-500">
-                レポートを生成する
+                {{ $t('dashboard.generateReports') }}
               </p>
             </div>
           </div>

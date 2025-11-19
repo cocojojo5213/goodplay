@@ -24,7 +24,7 @@
 
         <!-- テキスト -->
         <h3 class="text-lg font-medium text-gray-900 text-center mb-4">
-          書類を削除しますか？
+          {{ $t('documents.confirmDelete') }}
         </h3>
 
         <div class="bg-gray-50 rounded-lg p-4 mb-6">
@@ -40,7 +40,7 @@
         </div>
 
         <p class="text-sm text-gray-600 mb-6">
-          この操作は取り消せません。関連するファイルも削除されます。
+          {{ $t('documents.deleteWarning') }}
         </p>
 
         <!-- ボタン -->
@@ -49,13 +49,13 @@
             class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
             @click="$emit('cancel')"
           >
-            キャンセル
+            {{ $t('common.cancel') }}
           </button>
           <button
             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
             @click="$emit('confirm')"
           >
-            削除
+            {{ $t('common.delete') }}
           </button>
         </div>
       </div>
