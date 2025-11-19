@@ -15,6 +15,7 @@ class EmployeeController extends BaseController {
     private $service;
     
     public function __construct() {
+        parent::__construct();
         $this->service = new EmployeeService();
     }
     
@@ -84,8 +85,10 @@ class EmployeeController extends BaseController {
             
             $this->respondSuccess($response);
         } catch (Exception $e) {
-            error_log('従業員一覧取得エラー: ' . $e->getMessage());
-            $this->respondError('従業員一覧の取得に失敗しました', 500);
+            FileLogger::error('従業員一覧取得エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null
+            ]);
+            ResponseHelper::serverError('従業員一覧の取得に失敗しました', $e);
         }
     }
     
@@ -116,8 +119,11 @@ class EmployeeController extends BaseController {
             
             $this->respondSuccess(['employee' => $employee]);
         } catch (Exception $e) {
-            error_log('従業員詳細取得エラー: ' . $e->getMessage());
-            $this->respondError('従業員情報の取得に失敗しました', 500);
+            FileLogger::error('従業員詳細取得エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null,
+                'employee_id' => $id
+            ]);
+            ResponseHelper::serverError('従業員情報の取得に失敗しました', $e);
         }
     }
     
@@ -146,7 +152,7 @@ class EmployeeController extends BaseController {
             }
             
             $employeeId = $this->service->createEmployee($payload);
-            $this->logActivity($user['user_id'], 'create', 'employees', $employeeId, null, $payload);
+            $this->loggingService->logCreate($user['user_id'], 'employees', $employeeId, $payload);
             
             $employee = $this->service->getEmployeeWithRelations($employeeId, false);
             $employee = $this->appendSupplementaryData($employee);
@@ -156,8 +162,11 @@ class EmployeeController extends BaseController {
                 'employee' => $employee
             ], 201);
         } catch (Exception $e) {
-            error_log('従業員作成エラー: ' . $e->getMessage());
-            $this->respondError('従業員の作成に失敗しました', 500);
+            FileLogger::error('従業員作成エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null,
+                'payload' => $payload ?? []
+            ]);
+            ResponseHelper::serverError('従業員の作成に失敗しました', $e);
         }
     }
     
@@ -208,7 +217,7 @@ class EmployeeController extends BaseController {
                 $newValues[$field] = $value;
             }
             
-            $this->logActivity($user['user_id'], 'update', 'employees', $id, $oldValues, $newValues);
+            $this->loggingService->logUpdate($user['user_id'], 'employees', $id, $oldValues, $newValues);
             
             $updated = $this->service->getEmployeeWithRelations($id, false);
             $updated = $this->appendSupplementaryData($updated);
@@ -218,8 +227,12 @@ class EmployeeController extends BaseController {
                 'employee' => $updated
             ]);
         } catch (Exception $e) {
-            error_log('従業員更新エラー: ' . $e->getMessage());
-            $this->respondError('従業員情報の更新に失敗しました', 500);
+            FileLogger::error('従業員更新エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null,
+                'employee_id' => $id,
+                'payload' => $payload ?? []
+            ]);
+            ResponseHelper::serverError('従業員情報の更新に失敗しました', $e);
         }
     }
     
@@ -242,12 +255,15 @@ class EmployeeController extends BaseController {
             }
             
             $this->service->softDeleteEmployee($id);
-            $this->logActivity($user['user_id'], 'delete', 'employees', $id, $existing, null);
+            $this->loggingService->logDelete($user['user_id'], 'employees', $id, $existing);
             
             $this->respondSuccess(['message' => '従業員を削除しました']);
         } catch (Exception $e) {
-            error_log('従業員削除エラー: ' . $e->getMessage());
-            $this->respondError('従業員の削除に失敗しました', 500);
+            FileLogger::error('従業員削除エラー: ' . $e->getMessage(), [
+                'user_id' => $user['user_id'] ?? null,
+                'employee_id' => $id
+            ]);
+            ResponseHelper::serverError('従業員の削除に失敗しました', $e);
         }
     }
     
@@ -281,8 +297,10 @@ class EmployeeController extends BaseController {
                 'summary' => $certificates['summary']
             ]);
         } catch (Exception $e) {
-            error_log('証明書取得エラー: ' . $e->getMessage());
-            $this->respondError('証明書情報の取得に失敗しました', 500);
+            FileLogger::error('証明書取得エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('証明書情報の取得に失敗しました', $e);
         }
     }
     
@@ -352,8 +370,10 @@ class EmployeeController extends BaseController {
             
             $this->respondSuccess($response);
         } catch (Exception $e) {
-            error_log('勤務記録取得エラー: ' . $e->getMessage());
-            $this->respondError('勤務記録の取得に失敗しました', 500);
+            FileLogger::error('勤務記録取得エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('勤務記録の取得に失敗しました', $e);
         }
     }
     
@@ -387,8 +407,10 @@ class EmployeeController extends BaseController {
                 'summary' => $documents['summary']
             ]);
         } catch (Exception $e) {
-            error_log('文書取得エラー: ' . $e->getMessage());
-            $this->respondError('文書情報の取得に失敗しました', 500);
+            FileLogger::error('文書取得エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('文書情報の取得に失敗しました', $e);
         }
     }
     
@@ -415,8 +437,10 @@ class EmployeeController extends BaseController {
                 'emergency_contact' => $this->service->getEmergencyContactInfo($employee)
             ]);
         } catch (Exception $e) {
-            error_log('緊急連絡先取得エラー: ' . $e->getMessage());
-            $this->respondError('緊急連絡先情報の取得に失敗しました', 500);
+            FileLogger::error('緊急連絡先取得エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('緊急連絡先情報の取得に失敗しました', $e);
         }
     }
     
@@ -448,13 +472,14 @@ class EmployeeController extends BaseController {
             
             $this->service->updateEmergencyContact($employeeId, $payload);
             
-            $this->logActivity(
+            $this->loggingService->log(
                 $user['user_id'],
                 'update_emergency_contact',
                 'employees',
                 $employeeId,
                 $this->service->getEmergencyContactInfo($employee),
-                $payload
+                $payload,
+                true
             );
             
             $this->respondSuccess([
@@ -462,8 +487,10 @@ class EmployeeController extends BaseController {
                 'emergency_contact' => $payload
             ]);
         } catch (Exception $e) {
-            error_log('緊急連絡先更新エラー: ' . $e->getMessage());
-            $this->respondError('緊急連絡先の更新に失敗しました', 500);
+            FileLogger::error('緊急連絡先更新エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('緊急連絡先の更新に失敗しました', $e);
         }
     }
     
@@ -490,8 +517,10 @@ class EmployeeController extends BaseController {
                 'visa' => $this->service->getVisaInfo($employee)
             ]);
         } catch (Exception $e) {
-            error_log('ビザ情報取得エラー: ' . $e->getMessage());
-            $this->respondError('ビザ情報の取得に失敗しました', 500);
+            FileLogger::error('ビザ情報取得エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('ビザ情報の取得に失敗しました', $e);
         }
     }
     
@@ -529,13 +558,14 @@ class EmployeeController extends BaseController {
             
             $this->service->updateVisaInfo($employeeId, $payload);
             
-            $this->logActivity(
+            $this->loggingService->log(
                 $user['user_id'],
                 'update_visa_info',
                 'employees',
                 $employeeId,
                 $this->service->getVisaInfo($employee),
-                $payload
+                $payload,
+                true
             );
             
             $this->respondSuccess([
@@ -543,8 +573,10 @@ class EmployeeController extends BaseController {
                 'visa' => $payload
             ]);
         } catch (Exception $e) {
-            error_log('ビザ情報更新エラー: ' . $e->getMessage());
-            $this->respondError('ビザ情報の更新に失敗しました', 500);
+            FileLogger::error('ビザ情報更新エラー: ' . $e->getMessage(), [
+                'employee_id' => $employeeId ?? null
+            ]);
+            ResponseHelper::serverError('ビザ情報の更新に失敗しました', $e);
         }
     }
     
@@ -561,8 +593,8 @@ class EmployeeController extends BaseController {
             $stats = $this->service->getStatistics();
             $this->respondSuccess(['statistics' => $stats]);
         } catch (Exception $e) {
-            error_log('統計情報取得エラー: ' . $e->getMessage());
-            $this->respondError('統計情報の取得に失敗しました', 500);
+            FileLogger::error('統計情報取得エラー: ' . $e->getMessage());
+            ResponseHelper::serverError('統計情報の取得に失敗しました', $e);
         }
     }
     
