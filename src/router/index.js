@@ -7,7 +7,10 @@ const Dashboard = () => import('@/views/Dashboard.vue')
 const Employees = () => import('@/views/Employees.vue')
 const EmployeeDetail = () => import('@/views/EmployeeDetail.vue')
 const Documents = () => import('@/views/Documents.vue')
+const Reports = () => import('@/views/Reports.vue')
+const WorkRecords = () => import('@/views/WorkRecords.vue')
 const Settings = () => import('@/views/Settings.vue')
+const LayoutTest = () => import('@/views/LayoutTest.vue')
 const NotFound = () => import('@/views/NotFound.vue')
 
 const routes = [
@@ -66,12 +69,37 @@ const routes = [
     }
   },
   {
+    path: '/reports',
+    name: 'Reports',
+    component: Reports,
+    meta: {
+      title: 'レポート',
+    path: '/work-records',
+    name: 'WorkRecords',
+    component: WorkRecords,
+    meta: {
+      title: '勤怠記録',
+      requiresAuth: true,
+      layout: 'default'
+    }
+  },
+  {
     path: '/settings',
     name: 'Settings',
     component: Settings,
     meta: {
       title: '設定',
       requiresAuth: true,
+      layout: 'default'
+    }
+  },
+  {
+    path: '/layout-test',
+    name: 'LayoutTest',
+    component: LayoutTest,
+    meta: {
+      title: 'レイアウトテスト',
+      requiresAuth: false,
       layout: 'default'
     }
   },

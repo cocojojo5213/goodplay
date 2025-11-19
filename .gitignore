@@ -7,6 +7,7 @@ npm-debug.log*
 # 后端
 /data/database.sqlite
 /data/uploads
+/logs/*.log
 
 # 配置
 .env
