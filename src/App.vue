@@ -1,4 +1,9 @@
 <template>
+  <div
+    id="app"
+    class="min-h-screen bg-gray-50"
+  >
+    <router-view />
   <div id="app" class="min-h-screen bg-gray-50">
     <!-- Layout component based on route meta -->
     <component :is="layoutComponent">
