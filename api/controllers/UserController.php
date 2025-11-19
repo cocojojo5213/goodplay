@@ -9,6 +9,10 @@ require_once __DIR__ . '/BaseController.php';
 
 class UserController extends BaseController {
     
+    public function __construct() {
+        parent::__construct();
+    }
+    
     /**
      * 获取用户列表
      */

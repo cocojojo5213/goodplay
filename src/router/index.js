@@ -9,6 +9,7 @@ const EmployeeDetail = () => import('@/views/EmployeeDetail.vue')
 const Documents = () => import('@/views/Documents.vue')
 const WorkRecords = () => import('@/views/WorkRecords.vue')
 const Settings = () => import('@/views/Settings.vue')
+const LayoutTest = () => import('@/views/LayoutTest.vue')
 const NotFound = () => import('@/views/NotFound.vue')
 
 const routes = [
@@ -83,6 +84,16 @@ const routes = [
     meta: {
       title: '設定',
       requiresAuth: true,
+      layout: 'default'
+    }
+  },
+  {
+    path: '/layout-test',
+    name: 'LayoutTest',
+    component: LayoutTest,
+    meta: {
+      title: 'レイアウトテスト',
+      requiresAuth: false,
       layout: 'default'
     }
   },
